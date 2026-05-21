@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在前往註冊頁面...</title>
+</head>
+<body style="font-family: -apple-system, sans-serif; background-color: #f5f5f7; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+
+    <div style="text-align: center; padding: 20px;">
+        <p style="font-size: 18px; color: #333; margin-bottom: 20px;">網頁即將跳轉，若手機沒有自動彈出，請點擊下方按鈕：</p>
+        <!-- 備用按鈕 -->
+        <a href="intent://jsjjj.net/register.php#Intent;scheme=https;action=android.intent.action.VIEW;end" 
+           style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">
+           使用外部瀏覽器開啟
+        </a>
+    </div>
+
+    <script type="text/javascript">
+        // 這是你的 Android 強制外開 Intent 網址
+        var intentUrl = "intent://jsjjj.net/register.php#Intent;scheme=https;action=android.intent.action.VIEW;end";
+        
+        // 當頁面載入時，立刻嘗試自動拋出 Intent 觸發 Android 跳出
+        window.location.href = intentUrl;
+    </script>
+
+</body>
+</html>
