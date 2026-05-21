@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鈔安心實名註冊</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f2f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            max-width: 360px;
+            width: 100%;
+            background: white;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+        }
+        .ios-alert {
+            border-top: 6px solid #007aff;
+        }
+        
+        /* Safari 擬真圖標 */
+        .safari-icon-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .safari-icon {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #56ccf2, #2f80ed);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4);
+            animation: pulse 2s infinite;
+        }
+        .safari-icon::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 2px dashed rgba(255,255,255,0.6);
+            border-radius: 50%;
+        }
+        .safari-icon::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 0;
+            top: 50%; left: 50%;
+            margin-top: -25px; margin-left: -6px;
+            border-style: solid;
+            border-width: 0 6px 25px 6px;
+            border-color: transparent transparent #ff3b30 transparent;
+            transform: rotate(45deg);
+            transform-origin: 50% 100%;
+        }
+        .safari-pointer-bottom {
+            position: absolute;
+            width: 0; height: 0;
+            top: 50%; left: 50%;
+            margin-left: -6px;
+            border-style: solid;
+            border-width: 25px 6px 0 6px;
+            border-color: #ffffff transparent transparent transparent;
+            transform: rotate(45deg);
+            transform-origin: 50% 0%;
+        }
+        .safari-center {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%; left: 50%;
+            margin-top: -3px; margin-left: -3px;
+            box-shadow: 0 0 4px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        h2 { margin: 0 0 15px 0; color: #1c1c1e; font-size: 22px; font-weight: 700; }
+        p { font-size: 15px; color: #3a3a3c; line-height: 1.6; margin-bottom: 25px; text-align: left; }
+        .strong-red { color: #ff3b30; font-weight: bold; }
+        .strong-blue { color: #007aff; font-weight: bold; }
+        
+        .copy-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007aff;
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.25);
+            box-sizing: border-box;
+            transition: transform 0.1s ease;
+        }
+        .copy-btn:active { transform: scale(0.98); background-color: #0056b3; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4); }
+            50% { transform: scale(1.04); box-shadow: 0 6px 22px rgba(47, 128, 237, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 【iOS 專屬引導畫面】 ==================== -->
+    <div id="ios-zone" class="container ios-alert" style="display: none;">
+        <div class="safari-icon-wrapper">
+            <div class="safari-icon">
+                <div class="safari-pointer-bottom"></div>
+                <div class="safari-center"></div>
+            </div>
+        </div>
+        <h2>必須使用 Safari 開啟網頁</h2>
+        <p>
+            ⚠️ 偵測到您目前處於 Facebook 瀏覽器中。<br><br>
+            由於 Apple 安全機制限制，<span class="strong-red">社群軟體內部無法下載和安裝描述檔</span>。請依照以下步驟操作：<br><br>
+            1. 點擊下方按鈕<span class="strong-blue">「複製註冊網址」</span>。<br>
+            2. 回到桌面，打開手機內建的 <span class="strong-blue">Safari 瀏覽器</span>。<br>
+            3. 在上方網址列貼上並前往，即可正常下載安裝。
+        </p>
+        <button class="copy-btn" onclick="copyTargetUrl()">📋 複製網址，去 Safari 貼上</button>
+        <div id="toast" style="display: none; margin-top: 15px; color: #34c759; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 8px; border-radius: 8px;">✓ 網址已複製！請至 Safari 貼上</div>
+    </div>
+
+    <!-- ==================== 【Android 自動跳轉畫面】 ==================== -->
+    <div id="android-zone" class="container" style="display: none;">
+        <div style="font-size: 50px; margin-bottom: 15px;">🔄</div>
+        <h2>網頁自動跳轉中...</h2>
+        <p style="text-align: center;">若手機沒有成功彈出您的預設瀏覽器，請點擊下方按鈕手動開啟：</p>
+        <a id="android-link" href="#" class="copy-btn" style="text-align: center;">使用預設瀏覽器開啟</a>
+    </div>
+
+    <script type="text/javascript">
+        // ─── 📝 請在這裡填入此頁面最終要去的「真正註冊網址」 ───
+        // 注意：多網址管理時（如 event1, event2），只需更改此處的目標網址即可
+        var targetWebUrl = "ccans-loan.com/register.php"; 
+        
+        var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
+        
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1;
+
+        if (isAndroid) {
+            // Android 處理（自動喚醒手機預設瀏覽器）
+            document.getElementById("android-zone").style.display = "block";
+            document.getElementById("android-link").href = androidIntent;
+            window.location.href = androidIntent;
+        } else {
+            // iOS 處理
+            document.getElementById("ios-zone").style.display = "block";
+        }
+
+        // iOS 直接複製「目標網址」功能
+        function copyTargetUrl() {
+            // 自動幫忙補上穩定的 https:// 開頭
+            var finalCopyUrl = "https://" + targetWebUrl;
+            
+            var tempInput = document.createElement("input");
+            tempInput.value = finalCopyUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand("copy");
+                var toast = document.getElementById("toast");
+                toast.style.display = "block";
+                setTimeout(function() { toast.style.display = "none"; }, 4000);
+            } catch (err) {
+                alert("複製失敗，請手動複製網址。");
+            }
+            document.body.removeChild(tempInput);
+        }
+    </script>
+
+</body>
+</html>
