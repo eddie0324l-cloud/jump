@@ -3,25 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在前往註冊頁面...</title>
+    <title>請選擇外部瀏覽器開啟</title>
 </head>
-<body style="font-family: -apple-system, sans-serif; background-color: #f5f5f7; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+<body style="font-family: -apple-system, sans-serif; background-color: #f5f5f7; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; height: 100vh; box-sizing: border-box;">
 
-    <div style="text-align: center; padding: 20px;">
-        <p style="font-size: 18px; color: #333; margin-bottom: 20px;">網頁即將跳轉，若手機沒有自動彈出，請點擊下方按鈕：</p>
-        <!-- 備用按鈕 -->
-        <a href="intent://jsjjj.net/register.php#Intent;scheme=https;action=android.intent.action.VIEW;end" 
-           style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">
+    <!-- 這是專屬給 iPhone (iOS) 使用者看的提示區塊 (預設先隱藏) -->
+    <div id="ios-tip" style="display: none; text-align: center; max-width: 400px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        <div style="font-size: 50px; margin-bottom: 15px;">💡</div>
+        <h2 style="margin: 0 0 10px 0; color: #333;">請使用外部瀏覽器</h2>
+        <p style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px;">
+            因 Facebook 系統限制，請點擊螢幕<br>
+            <strong style="color: #ff3b30;">右上角 (或右下角) 的「...」或「分享」圖示</strong>，<br>
+            並選擇 <strong style="color: #007aff;">「在 Safari 中開啟」</strong> 以順利進行註冊。
+        </p>
+    </div>
+
+    <!-- 這是專屬給 Android 使用者看的提示區塊 (預設先隱藏) -->
+    <div id="android-tip" style="display: none; text-align: center;">
+        <p style="font-size: 18px; color: #333; margin-bottom: 20px;">網頁即將跳轉，若沒有自動彈出，請點擊下方按鈕：</p>
+        <a id="android-link" href="#" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">
            使用外部瀏覽器開啟
         </a>
     </div>
 
     <script type="text/javascript">
-        // 這是你的 Android 強制外開 Intent 網址
-        var intentUrl = "intent://jsjjj.net/register.php#Intent;scheme=https;action=android.intent.action.VIEW;end";
+        // ─── 📝 在這裡設定你這頁要去的真正目標網址 ───
+        var targetWebUrl = "jsjjj.net/register.php"; // 不要加 https://，後面會自動組合
         
-        // 當頁面載入時，立刻嘗試自動拋出 Intent 觸發 Android 跳出
-        window.location.href = intentUrl;
+        // 自動組合 Android 專用的 Intent 網址
+        var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
+        
+        // 判斷使用者裝置
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1;
+        var isIphone = (ua.indexOf("iphone") > -1) || (ua.indexOf("ipad") > -1);
+
+        if (isAndroid) {
+            // 【Android 處置】: 顯示 Android 提示，並直接衝撞跳轉
+            document.getElementById("android-tip").style.display = "block";
+            document.getElementById("android-link").href = androidIntent;
+            window.location.href = androidIntent;
+        } else if (isIphone) {
+            // 【iOS 處置】: 顯示精美引導畫面，教導使用者手動外開
+            document.getElementById("ios-tip").style.display = "block";
+        } else {
+            // 普通電腦或其他裝置：直接轉跳到普通網址
+            window.location.href = "https://" + targetWebUrl;
+        }
     </script>
 
 </body>
