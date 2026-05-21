@@ -14,19 +14,46 @@
         p { font-size: 14px; color: #3a3a3c; line-height: 1.5; text-align: center; margin: 0 0 25px; }
         .copy-btn { display: block; width: 100%; padding: 14px; background-color: #007aff; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,123,255,0.2); }
         
-        /* 複製成功的動態提示區 */
-        #animation-zone { display: none; margin-top: 25px; animation: fadeIn 0.4s ease-out; }
+        #animation-zone { display: none; margin-top: 25px; animation: fadeIn 0.4s ease-out forwards; }
         .toast-msg { color: #34c759; font-weight: bold; font-size: 16px; margin-bottom: 20px; }
 
-        /* 圖文說明卡片 */
-        .instruction-box { text-align: left; background: #f8f9fa; border-radius: 14px; padding: 14px 16px; margin-top: 12px; border: 1px solid #e5e5ea; }
-        .step-badge { display: inline-block; background: #007aff; color: white; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px; }
+        /* ==================== 📋 文字步驟同步卡片 ==================== */
+        .instruction-box { 
+            text-align: left; background: white; border-radius: 14px; padding: 14px 16px; 
+            margin-top: 12px; border: 1px solid #e5e5ea; opacity: 0.3; transform: scale(0.96);
+            transition: border-color 0.3s;
+        }
+        .step-badge { display: inline-block; background: #8e8e93; color: white; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px; transition: background 0.3s; }
         .step-txt { font-size: 13.5px; color: #1c1c1e; line-height: 1.4; font-weight: 500; }
         .highlight-blue { color: #007aff; font-weight: bold; }
 
+        /* 綁定與動畫完全同步的計時器（總時長 6 秒循環） */
+        .sync-step-1 { animation: textSync1 6s infinite ease-in-out; }
+        .sync-step-2 { animation: textSync2 6s infinite ease-in-out; }
+        .sync-step-3 { animation: textSync3 6s infinite ease-in-out; }
+
+        /* 文字卡片高亮腳本 */
+        @keyframes textSync1 {
+            0%, 22% { opacity: 1; transform: scale(1); background: #f8f9fa; border-color: #007aff; }
+            0%, 22% { .step-badge { background: #007aff; } }
+            28%, 100% { opacity: 0.3; transform: scale(0.96); background: white; border-color: #e5e5ea; }
+        }
+        @keyframes textSync2 {
+            0%, 22% { opacity: 0.3; transform: scale(0.96); background: white; border-color: #e5e5ea; }
+            28%, 44% { opacity: 1; transform: scale(1); background: #f8f9fa; border-color: #007aff; }
+            28%, 44% { .step-badge { background: #007aff; } }
+            50%, 100% { opacity: 0.3; transform: scale(0.96); background: white; border-color: #e5e5ea; }
+        }
+        @keyframes textSync3 {
+            0%, 44% { opacity: 0.3; transform: scale(0.96); background: white; border-color: #e5e5ea; }
+            50%, 88% { opacity: 1; transform: scale(1); background: #f8f9fa; border-color: #007aff; }
+            50%, 88% { .step-badge { background: #007aff; } }
+            94%, 100% { opacity: 0.3; transform: scale(0.96); background: white; border-color: #e5e5ea; }
+        }
+
         /* ==================== 🎬 iOS 擬真操作動畫 ==================== */
         .mock-phone {
-            width: 180px; height: 320px;
+            width: 170px; height: 300px;
             border: 8px solid #1c1c1e; border-radius: 28px;
             margin: 0 auto 20px; position: relative;
             background: #000; overflow: hidden;
@@ -43,13 +70,13 @@
             position: relative; animation: screenSwitch 6s infinite ease-in-out;
         }
         .mock-safari-app {
-            position: absolute; top: 110px; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 100px; left: 50%; transform: translateX(-50%);
             width: 42px; height: 42px; background: radial-gradient(circle, #56ccf2, #2f80ed);
             border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: appFade 6s infinite;
         }
         .mock-safari-app::after {
             content: 'Safari'; position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
-            font-size: 9px; color: #fff; font-weight: normal;
+            font-size: 9px; color: #fff;
         }
         .mock-browser-bar {
             position: absolute; top: 30px; left: 10px; right: 10px; height: 26px;
@@ -60,27 +87,27 @@
         .mock-finger {
             position: absolute; width: 22px; height: 22px;
             background: rgba(255, 255, 255, 0.4); border: 2px solid #fff; border-radius: 50%;
-            top: 130px; left: 90px; transform: scale(0); z-index: 5;
+            top: 120px; left: 85px; transform: scale(0); z-index: 5;
             animation: fingerMovement 6s infinite ease-in-out;
         }
 
-        /* ==================== 🔄 CSS 動態本體 ==================== */
+        /* ==================== 🔄 iOS 動畫時間軸元件 ==================== */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes screenSwitch { 0%, 15% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 25%, 85% { background: #f2f2f7; } 95%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
+        @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
         @keyframes fingerMovement {
-            0% { transform: scale(0); opacity: 0; top: 130px; left: 90px; }
-            10% { transform: scale(1); opacity: 1; top: 130px; left: 90px; }
-            14% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 130px; left: 90px; }
-            18% { transform: scale(0); opacity: 0; top: 130px; left: 90px; }
-            28% { transform: scale(0); opacity: 0; top: 43px; left: 90px; }
-            35% { transform: scale(1); opacity: 1; top: 43px; left: 90px; }
-            40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 43px; left: 90px; }
+            0% { transform: scale(0); opacity: 0; top: 120px; left: 85px; }
+            10% { transform: scale(1); opacity: 1; top: 120px; left: 85px; }
+            14% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 120px; left: 85px; }
+            18% { transform: scale(0); opacity: 0; top: 120px; left: 85px; }
+            30% { transform: scale(0); opacity: 0; top: 43px; left: 85px; }
+            36% { transform: scale(1); opacity: 1; top: 43px; left: 85px; }
+            40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 43px; left: 85px; }
             45%, 100% { transform: scale(0); opacity: 0; }
         }
-        @keyframes appFade { 0%, 18% { opacity: 1; transform: translateX(-50%) scale(1); } 25%, 88% { opacity: 0; transform: translateX(-50%) scale(0.6); } 95%, 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
-        @keyframes barFade { 0%, 20% { opacity: 0; transform: translateY(-5px); } 25%, 42% { opacity: 1; transform: translateY(0); color: #8e8e93; } 48%, 85% { opacity: 1; transform: translateY(0); color: #007aff; } 92%, 100% { opacity: 0; transform: translateY(-5px); } }
+        @keyframes appFade { 0%, 22% { opacity: 1; transform: translateX(-50%) scale(1); } 28%, 88% { opacity: 0; transform: translateX(-50%) scale(0.6); } 94%, 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
+        @keyframes barFade { 0%, 25% { opacity: 0; transform: translateY(-5px); } 28%, 44% { opacity: 1; transform: translateY(0); color: #8e8e93; } 50%, 88% { opacity: 1; transform: translateY(0); color: #007aff; } 94%, 100% { opacity: 0; transform: translateY(-5px); } }
         .mock-browser-bar::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
-        @keyframes urlPaste { 0%, 42% { content: '搜尋或輸入網址'; } 50%, 85% { content: 'jsjjj.net/register.php'; } 92%, 100% { content: '搜尋或輸入網址'; } }
+        @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'jsjjj.net/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
     </style>
 </head>
 <body>
@@ -89,34 +116,34 @@
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
         <h2>請複製網址至 Safari 註冊</h2>
-        <p>因 Facebook 系統限制，無法直接開啟。<br>請點擊下方按鈕，並依照動態步驟提示操作：</p>
+        <p>因 Facebook 系統限制，無法直接開啟。<br>請點擊下方按鈕，並依照同步動態步驟操作：</p>
         
         <button class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
 
-        <!-- 🎬 點擊複製後，動態淡入的「動畫+操作步驟」區 -->
+        <!-- 🎬 點擊複製後展開：動畫與文字完全同步區 -->
         <div id="animation-zone">
             <div class="toast-msg">✓ 網址已複製成功！</div>
             
-            <!-- 1. 擬真模擬動畫 -->
+            <!-- 1. 擬真模擬手機 (中央發動核心) -->
             <div class="mock-phone">
                 <div class="mock-notch"></div><div class="mock-finger"></div>
                 <div class="mock-screen"><div class="mock-safari-app"></div><div class="mock-browser-bar"></div></div>
             </div>
 
-            <!-- 2. 同步文字步驟解說 -->
-            <div class="instruction-box">
-                <span class="step-badge" style="background-color: #8e8e93;">步驟 1</span>
-                <div class="step-txt">按壓 Home 鍵或向上滑，先<b>退回手機桌面</b>。</div>
+            <!-- 2. 下方同步高亮解說字卡 -->
+            <div class="instruction-box sync-step-1">
+                <span class="step-badge">步驟 1</span>
+                <div class="step-txt">滑出或返回手機桌面，看見手機原始主畫面。</div>
             </div>
 
-            <div class="instruction-box">
+            <div class="instruction-box sync-step-2">
                 <span class="step-badge">步驟 2</span>
-                <div class="step-txt">在桌面找到並打開藍色指南針 <span class="highlight-blue">🧭 Safari 瀏覽器</span>。</div>
+                <div class="step-txt">在桌面點擊開啟內建的 <span class="highlight-blue">🧭 Safari 瀏覽器</span>。</div>
             </div>
 
-            <div class="instruction-box">
+            <div class="instruction-box sync-step-3">
                 <span class="step-badge">步驟 3</span>
-                <div class="step-txt">點擊最上方或最下方的 <span class="highlight-blue">🔍 網址輸入列</span>，<b>長按並點選「貼上並前往」</b>即可進入網頁註冊。</div>
+                <div class="step-txt">輕點最上方的 <span class="highlight-blue">🔍 網址輸入列</span>，<b>長按並選擇「貼上並前往」</b>。</div>
             </div>
         </div>
     </div>
@@ -130,7 +157,7 @@
     </div>
 
     <script type="text/javascript">
-        var targetWebUrl = "jsjjj.net/register.php"; // 你的真正註冊網址
+        var targetWebUrl = "jsjjj.net/register.php"; 
         var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
         
         var ua = navigator.userAgent.toLowerCase();
@@ -154,6 +181,7 @@
             
             try {
                 document.execCommand("copy");
+                // 顯示完全同步的引導區
                 document.getElementById("animation-zone").style.display = "block";
             } catch (err) {
                 alert("複製失敗，請手動複製網址。");
