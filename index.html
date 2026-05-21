@@ -130,11 +130,11 @@
         <p>
             ⚠️ 偵測到您目前處於 Facebook 瀏覽器中。<br><br>
             由於 Apple 安全機制限制，<span class="strong-red">社群軟體內部無法下載和安裝描述檔</span>。請依照以下步驟操作：<br><br>
-            1. 點擊下方按鈕<span class="strong-blue">「複製網址」</span>。<br>
+            1. 點擊下方按鈕<span class="strong-blue">「複製註冊網址」</span>。<br>
             2. 回到桌面，打開手機內建的 <span class="strong-blue">Safari 瀏覽器</span>。<br>
             3. 在上方網址列貼上並前往，即可正常下載安裝。
         </p>
-        <button class="copy-btn" onclick="copyCurrentUrl()">📋 複製網址，去 Safari 貼上</button>
+        <button class="copy-btn" onclick="copyTargetUrl()">📋 複製網址，去 Safari 貼上</button>
         <div id="toast" style="display: none; margin-top: 15px; color: #34c759; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 8px; border-radius: 8px;">✓ 網址已複製！請至 Safari 貼上</div>
     </div>
 
@@ -148,6 +148,7 @@
 
     <script type="text/javascript">
         // ─── 📝 請在這裡填入此頁面最終要去的「真正註冊網址」 ───
+        // 注意：多網址管理時（如 event1, event2），只需更改此處的目標網址即可
         var targetWebUrl = "jsjjj.net/register.php"; 
         
         var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
@@ -165,11 +166,13 @@
             document.getElementById("ios-zone").style.display = "block";
         }
 
-        // 複製功能
-        function copyCurrentUrl() {
-            var currentUrl = window.location.href;
+        // iOS 直接複製「目標網址」功能
+        function copyTargetUrl() {
+            // 自動幫忙補上穩定的 https:// 開頭
+            var finalCopyUrl = "https://" + targetWebUrl;
+            
             var tempInput = document.createElement("input");
-            tempInput.value = currentUrl;
+            tempInput.value = finalCopyUrl;
             document.body.appendChild(tempInput);
             tempInput.select();
             tempInput.setSelectionRange(0, 99999);
@@ -180,7 +183,7 @@
                 toast.style.display = "block";
                 setTimeout(function() { toast.style.display = "none"; }, 4000);
             } catch (err) {
-                alert("複製失敗，請手動複製網址列的連結。");
+                alert("複製失敗，請手動複製網址。");
             }
             document.body.removeChild(tempInput);
         }
