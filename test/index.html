@@ -42,7 +42,7 @@
         .mini-text { font-size: 11.5px; color: #1c1c1e; font-weight: 600; line-height: 1.3; text-align: center; }
         .mini-text::after { content: ''; animation: textSubtitleSync 6s infinite; }
 
-        /* ==================== 🔄 劇場劇本時間軸 ==================== */
+        /* ==================== 🔄 🎬 劇場劇本時間軸 ==================== */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
         @keyframes fingerMovement { 0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; } 8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; } 12% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 88px; left: 110px; } 16% { transform: scale(0); opacity: 0; top: 88px; left: 110px; } 30% { transform: scale(0); opacity: 0; top: 46px; left: 110px; } 36% { transform: scale(1); opacity: 1; top: 46px; left: 110px; } 40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 46px; left: 110px; } 45%, 100% { transform: scale(0); opacity: 0; } }
@@ -62,7 +62,7 @@
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
         <h2 id="ios-title">請複製網址至 Safari 開啟</h2>
-        <p id="ios-desc">因系統限制無法直接跳轉，請點擊下方按鈕複製網址，並參考動畫操作：</p>
+        <p id="ios-desc">因內建瀏覽器限制，請點擊下方按鈕複製網址，並打開 Safari 瀏覽器貼上：</p>
         
         <button id="ios-btn" class="copy-btn" onclick="copyCurrentUrl()">📋 點我複製網址</button>
 
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <!-- ==================== 【✨ 最終官網選擇面板 (環境驗證成功、隨機排列按鈕)】 ==================== -->
+    <!-- ==================== 【✨ 最終官網選擇面板 (絕對停留，讓客戶自選)】 ==================== -->
     <div id="select-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
         <div style="font-size: 36px; margin-bottom: 6px;">🌍</div>
         <h2>請選擇欲前往的官方網站</h2>
@@ -143,38 +143,24 @@
         // 環境特徵判定
         var isAndroid = ua.indexOf("android") > -1;
         var isIos = (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1 || ua.indexOf("ipod") > -1);
-        var isFbBrowser = (ua.indexOf("fban") > -1 || ua.indexOf("fbav") > -1);
+        var isFbBrowser = (ua.indexOf("fban") > -1 || ua.indexOf("fbav") > -1 || ua.indexOf("line") > -1);
         var hasTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
         var isDesktopSize = window.innerWidth > 1024;
 
-        // ==================== 🛠️ 分流核心邏輯 ====================
+        // ==================== 🛠️ 分流核心邏輯 (拿掉所有自動跳轉，確保一定停留在頁面上) ====================
 
         if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
+            // 攔截：電腦桌機、無觸控開發者工具、模擬器
             document.getElementById("block-zone").style.display = "block";
             alert("安全提示：請使用真實的智慧型手機開啟此認證頁面。");
         } 
-        else if (isAndroid) {
-            if (isFbBrowser) {
-                var intentRawUrl = currentFullUrl.replace("https://", "").replace("http://", "");
-                var androidIntent = "intent://" + intentRawUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
-                window.location.href = androidIntent;
-                document.getElementById("select-zone").style.display = "block";
-            } else {
-                document.getElementById("select-zone").style.display = "block";
-            }
-        } 
-        else if (isIos) {
-            if (!isFbBrowser && ua.indexOf("safari") > -1 && ua.indexOf("crios") === -1 && ua.indexOf("fxios") === -1) {
-                document.getElementById("select-zone").style.display = "block";
-            } else {
-                document.getElementById("ios-zone").style.display = "block";
-            }
-        } 
-        else if (hasTouch) {
-            document.getElementById("select-zone").style.display = "block";
+        else if (isIos && isFbBrowser) {
+            // 特殊狀況：iOS 在 LINE/FB 內部，提示複製去外部 Safari 瀏覽器打開
+            document.getElementById("ios-zone").style.display = "block";
         } 
         else {
-            document.getElementById("block-zone").style.display = "block";
+            // 其他所有狀況（Android 或是 已經在外部瀏覽器的 iOS），直接顯示按鈕選擇頁面！
+            document.getElementById("select-zone").style.display = "block";
         }
 
         function copyCurrentUrl() {
