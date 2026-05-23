@@ -16,21 +16,21 @@
         p { font-size: 13.5px; color: #3a3a3c; line-height: 1.4; text-align: center; margin: 0 0 18px; }
         .copy-btn { display: block; width: 100%; padding: 14px; background-color: #007aff; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,123,255,0.2); }
         
-        /* 載入中動畫（針對安卓秒轉前的過場） */
+        /* 載入中動畫 */
         .loading-spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #34c759; animation: spin 1s linear infinite; margin: 0 auto 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- 🔄 Android & 一般外開環境：秒轉跳過場 -->
+    <!-- 🔄 Android 暴力彈射過場（通常只會閃一下，使用者就會被踢出 LINE） -->
     <div id="redirect-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
         <div class="loading-spinner"></div>
-        <h2>安全環境驗證成功</h2>
-        <p style="color: #666; margin-bottom: 5px;">正在為您加密連線...</p>
+        <h2>正在開啟外部瀏覽器</h2>
+        <p style="color: #666; margin-bottom: 5px;">安全機制啟動中，請稍候...</p>
     </div>
 
-    <!-- 🧭 iOS 限制區：提示複製網址（精確引導至 select 頁面） -->
+    <!-- 🧭 iOS 限制區：提示複製網址 -->
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
         <h2>請複製網址至 Safari 開啟</h2>
@@ -43,12 +43,13 @@
     <div id="block-zone" class="container" style="display: none; border-top: 6px solid #ff3b30;">
         <div style="font-size: 40px; margin-bottom: 8px;">⚠️</div>
         <h2>設備環境異常</h2>
-        <p style="color: #ff3b30; font-weight: bold; margin-bottom: 0;">安全機制已啟動，不支援電腦環境操作。請換回真實智慧型手機開啟此連結。</p>
+        <p style="color: #ff3b30; font-weight: bold; margin-bottom: 0;">安全機制已啟動，不支援電腦環境操作。請換回真實手機開啟。</p>
     </div>
 
     <script type="text/javascript">
         // =================================================================
-        // 💡 核心設定：請在下方填入你第二個檔案（選擇頁面 select.html）的完整網址
+        // 💡 核心設定：請填入你第二個檔案（select.html）的完整網址
+        // ⚠️ 必須填寫完整的網域（例如：https://www.yourdomain.com/select.html）
         // =================================================================
         var targetSelectPage = "https://eddie0324l-cloud.github.io/jump/test/select.html"; 
 
@@ -60,32 +61,39 @@
         var hasTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
         var isDesktopSize = window.innerWidth > 1024;
 
-        // ==================== 🛠️ 分流核心邏輯 ====================
-
         if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
-            // 1. 電腦或模擬器 ➡️ 攔截鎖死
+            // 1. 電腦或模擬器 ➡️ 攔截
             document.getElementById("block-zone").style.display = "block";
-            alert("安全提示：請使用真實的智慧型手機開啟此頁面。");
         } 
         else if (isIos && isFbBrowser) {
-            // 2. iOS 在 LINE/FB 內 ➡️ 卡在 index 頁面，顯示複製引導字卡
+            // 2. iOS 在 LINE/FB 內 ➡️ 顯示複製字卡（iOS不支援Intent Scheme彈射，只能用此最優解）
             document.getElementById("ios-zone").style.display = "block";
         } 
         else {
-            // 3. Android（不管在不在 App 內）或 已經在 Safari 的 iOS
-            // ➡️ 啟動最初最棒的「自動秒轉能力」，直接送去 select.html
+            // 3. Android（不論在 LINE 還是任何 App 內）
             document.getElementById("redirect-zone").style.display = "block";
             
-            // 使用最高權限的 location.replace 進行秒轉，不留歷史紀錄，防客戶返回
+            // 🚀 【Android 頂級暴力 Intent Scheme 彈射引擎】
+            // 去除網址最前方的 https:// 或 http:// 
+            var cleanUrl = targetSelectPage.replace(/^https?:\/\//i, "");
+            
+            // 封裝成 Android 底層系統直接解析的 Intent 語法
+            // 這段指令會強制手機呼叫預設瀏覽器（scheme=https）開啟該網頁
+            var intentUrl = "intent://" + cleanUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end";
+            
+            // ⚡️ 雙重火力和秒執行彈射
+            window.location.href = intentUrl;
+            
+            // 兜底方案：萬一有極老舊機型不支援 intent，0.3 秒後直接原視窗切換
             setTimeout(function() {
                 window.location.replace(targetSelectPage);
-            }, 300); 
+            }, 300);
         }
 
-        // 💡 核心功能：iOS 客戶點擊時，直接複製 select.html 的網址
+        // iOS 複製功能
         function copySelectUrl() {
             var tempInput = document.createElement("input");
-            tempInput.value = targetSelectPage; // 這裡直接帶入設定好的選擇頁網址
+            tempInput.value = targetSelectPage;
             document.body.appendChild(tempInput);
             tempInput.select();
             tempInput.setSelectionRange(0, 99999);
