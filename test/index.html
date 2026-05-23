@@ -19,7 +19,7 @@
         .site-btn { display: block; width: 100%; padding: 15px 12px; margin-bottom: 12px; color: white; text-decoration: none; border-radius: 14px; font-weight: bold; font-size: 15.5px; transition: transform 0.1s; border: none; cursor: pointer; box-sizing: border-box; }
         .site-btn:active { transform: scale(0.98); }
         
-        /* 三個按鈕不同的動態漸層顏色，隨機排列時顏色會跟著按鈕跑，畫面依然和諧漂亮 */
+        /* 三個官方網站按鈕的專屬樣式 */
         .color-style-1 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); box-shadow: 0 4px 15px rgba(79, 172, 254, 0.25); }
         .color-style-2 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 4px 15px rgba(118, 75, 162, 0.25); }
         .color-style-3 { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); box-shadow: 0 4px 15px rgba(253, 160, 133, 0.25); }
@@ -83,13 +83,13 @@
         </div>
     </div>
 
-    <!-- ==================== 【✨ 最終官網選擇面板 (環境驗證成功、隨機洗牌後才顯示)】 ==================== -->
+    <!-- ==================== 【✨ 最終官網選擇面板 (環境驗證成功、隨機排列按鈕)】 ==================== -->
     <div id="select-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
         <div style="font-size: 36px; margin-bottom: 6px;">🌍</div>
         <h2>請選擇欲前往的官方網站</h2>
-        <p style="color: #666; font-size: 13px; margin-bottom: 16px;">您已通過安全環境驗證，請點擊下方任一站點進入：</p>
+        <p style="color: #666; font-size: 13px; margin-bottom: 16px;">您已通過安全環境驗證，請自行選擇任一站點進入：</p>
         
-        <!-- 這裡是按鈕容器，JS 會把打亂順序後的按鈕塞到這裡面 -->
+        <!-- 這是放按鈕的空箱子，JS 會自動把亂數打亂後的按鈕塞進這裡 -->
         <div id="dynamic-button-container" class="select-zone"></div>
     </div>
 
@@ -102,19 +102,19 @@
 
     <script type="text/javascript">
         // =================================================================
-        // 🌟 【超級懶人設定區】在這裡設定你的 3 個目標網址，以及要在按鈕上顯示的文字
+        // 🌟 【網址與文字設定區】在這裡改成你真正的官方網站連結與按鈕名稱
         // =================================================================
         var siteConfig = [
-            { text: "進入 急速金 官方網站", url: "https://jsjjj.net/register.php", style: "color-style-1" },
-            { text: "進入 鈔安心 官方網站", url: "https://ccans-loan.com/register.php", style: "color-style-2" },
-            { text: "進入 貸好運 官方網站", url: "https://dyhu.org/register.php", style: "color-style-3" }
+            { text: "進入 急速金  官方網站", url: "https://jsjjj.net/register.php", style: "color-style-1" },
+            { text: "進入 鈔安心  官方網站", url: "https://ccans-loan.com/register.php", style: "color-style-2" },
+            { text: "進入 貸好運  官方網站", url: "https://dyhu.org/register.php", style: "color-style-3" }
         ];
 
         // =================================================================
         // 以下為自動核心運算邏輯，請勿更動
         // =================================================================
         
-        // 執行 Fisher-Yates 隨機洗牌演算法（將陣列順序完全打亂）
+        // 【核心】隨機洗牌演算法：把陣列裡按鈕的順序打亂
         for (var i = siteConfig.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             var temp = siteConfig[i];
@@ -122,19 +122,18 @@
             siteConfig[j] = temp;
         }
 
-        // 動態將洗牌後的按鈕生成並塞入 HTML 容器中
+        // 把打亂後的按鈕，一個一個排進畫面的選擇區中
         var container = document.getElementById("dynamic-button-container");
         for (var k = 0; k < siteConfig.length; k++) {
-            var btnHtml = '<a href="' + siteConfig[k].url + '" class="site-btn ' + siteConfig[k].style + '" target="_blank">' + siteConfig[k].text + '</a>';
+            var btnHtml = '<a href="' + siteConfig[k].url + '" class="site-btn ' + siteConfig[k].style + '">' + siteConfig[k].text + '</a>';
             container.innerHTML += btnHtml;
         }
 
-        // 獲取當前這個「中轉頁面」自己的網址，以便給 iOS 動態動畫與複製使用
+        // 獲取當前網址做為 iOS 複製使用
         var currentFullUrl = window.location.href;
         var displayUrlStr = window.location.host + window.location.pathname;
         if(displayUrlStr.length > 28) displayUrlStr = displayUrlStr.substring(0,25) + "...";
 
-        // 動態將當前網址寫入小手機動畫中
         var styleSheet = document.createElement("style");
         styleSheet.innerText = "@keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: '" + displayUrlStr + "'; } 94%, 100% { content: '搜尋或輸入網址'; } }";
         document.head.appendChild(styleSheet);
@@ -150,12 +149,10 @@
 
         // ==================== 🛠️ 分流核心邏輯 ====================
 
-        // 攔截：電腦桌機、無觸控開發者工具、模擬器
         if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
             document.getElementById("block-zone").style.display = "block";
             alert("安全提示：請使用真實的智慧型手機開啟此認證頁面。");
         } 
-        // 【真實 Android 手機】
         else if (isAndroid) {
             if (isFbBrowser) {
                 var intentRawUrl = currentFullUrl.replace("https://", "").replace("http://", "");
@@ -166,7 +163,6 @@
                 document.getElementById("select-zone").style.display = "block";
             }
         } 
-        // 【真實 iOS 手機】
         else if (isIos) {
             if (!isFbBrowser && ua.indexOf("safari") > -1 && ua.indexOf("crios") === -1 && ua.indexOf("fxios") === -1) {
                 document.getElementById("select-zone").style.display = "block";
@@ -174,7 +170,6 @@
                 document.getElementById("ios-zone").style.display = "block";
             }
         } 
-        // 其他有觸控的小螢幕保底
         else if (hasTouch) {
             document.getElementById("select-zone").style.display = "block";
         } 
@@ -182,7 +177,6 @@
             document.getElementById("block-zone").style.display = "block";
         }
 
-        // 複製當前網址功能
         function copyCurrentUrl() {
             var tempInput = document.createElement("input");
             tempInput.value = currentFullUrl;
