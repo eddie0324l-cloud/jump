@@ -18,85 +18,31 @@
         .toast-msg { color: #34c759; font-weight: bold; font-size: 15px; margin-bottom: 12px; }
 
         /* ==================== 🎬 iOS 擬真手機一體化面板 ==================== */
-        .mock-phone {
-            width: 220px; height: 260px; /* 寬度稍微拉寬，底部留空間放字卡 */
-            border: 8px solid #1c1c1e; border-radius: 28px;
-            margin: 0 auto; position: relative;
-            background: #000; overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        .mock-notch {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 12px; background: #1c1c1e;
-            border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; z-index: 10;
-        }
-        .mock-screen {
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1f1c2c, #928dab);
-            position: relative; animation: screenSwitch 6s infinite ease-in-out;
-        }
-        
-        /* 內建 Safari App 圖示 */
-        .mock-safari-app {
-            position: absolute; top: 65px; left: 50%; transform: translateX(-50%);
-            width: 46px; height: 46px; background: radial-gradient(circle, #56ccf2, #2f80ed);
-            border-radius: 11px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: appFade 6s infinite;
-        }
+        .mock-phone { width: 220px; height: 260px; border: 8px solid #1c1c1e; border-radius: 28px; margin: 0 auto; position: relative; background: #000; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .mock-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 12px; background: #1c1c1e; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; z-index: 10; }
+        .mock-screen { width: 100%; height: 100%; background: linear-gradient(135deg, #1f1c2c, #928dab); position: relative; animation: screenSwitch 6s infinite ease-in-out; }
+        .mock-safari-app { position: absolute; top: 65px; left: 50%; transform: translateX(-50%); width: 46px; height: 46px; background: radial-gradient(circle, #56ccf2, #2f80ed); border-radius: 11px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: appFade 6s infinite; }
         .mock-safari-app::after { content: 'Safari'; position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #fff; }
-        
-        /* 瀏覽器網址列 */
-        .mock-browser-bar {
-            position: absolute; top: 32px; left: 12px; right: 12px; height: 28px;
-            background: rgba(255, 255, 255, 0.9); border-radius: 8px; opacity: 0;
-            display: flex; align-items: center; padding-left: 8px; font-size: 10px;
-            color: #8e8e93; box-sizing: border-box; animation: barFade 6s infinite;
-        }
-        
-        /* 模擬點擊的手指 */
-        .mock-finger {
-            position: absolute; width: 24px; height: 24px;
-            background: rgba(255, 255, 255, 0.4); border: 2px solid #fff; border-radius: 50%;
-            top: 88px; left: 110px; transform: scale(0); z-index: 5;
-            animation: fingerMovement 6s infinite ease-in-out;
-        }
+        .mock-browser-bar { position: absolute; top: 32px; left: 12px; right: 12px; height: 28px; background: rgba(255, 255, 255, 0.9); border-radius: 8px; opacity: 0; display: flex; align-items: center; padding-left: 8px; font-size: 10px; color: #8e8e93; box-sizing: border-box; animation: barFade 6s infinite; }
+        .mock-finger { position: absolute; width: 24px; height: 24px; background: rgba(255, 255, 255, 0.4); border: 2px solid #fff; border-radius: 50%; top: 88px; left: 110px; transform: scale(0); z-index: 5; animation: fingerMovement 6s infinite ease-in-out; }
 
         /* ==================== 💬 手機內建：動態同步解說字卡 ==================== */
-        .phone-instruction-dock {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 65px;
-            background: rgba(255, 255, 255, 0.95); border-top: 1px solid #d1d1d6;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 0 12px; box-sizing: border-box; z-index: 8;
-        }
+        .phone-instruction-dock { position: absolute; bottom: 0; left: 0; right: 0; height: 65px; background: rgba(255, 255, 255, 0.95); border-top: 1px solid #d1d1d6; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 12px; box-sizing: border-box; z-index: 8; }
         .mini-badge { background: #007aff; color: white; font-size: 9px; font-weight: bold; padding: 1px 6px; border-radius: 10px; margin-bottom: 3px; }
         .mini-text { font-size: 11.5px; color: #1c1c1e; font-weight: 600; line-height: 1.3; text-align: center; }
-        
-        /* 讓文字隨時間軸變換內容 */
         .mini-text::after { content: ''; animation: textSubtitleSync 6s infinite; }
 
-        /* ==================== 🔄 劇場劇本時間軸 (全部共用 6 秒) ==================== */
+        /* 動態網址呈現 */
+        #mock-url-text::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
+
+        /* ==================== 🔄 劇場劇本時間軸 ==================== */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* 螢幕切換：前25%是桌面，之後進Safari系統 */
         @keyframes screenSwitch { 0%, 22% { background: linear-gradient(135deg, #1f1c2c, #928dab); } 28%, 88% { background: #f2f2f7; } 94%, 100% { background: linear-gradient(135deg, #1f1c2c, #928dab); } }
-        
-        /* 手指動作 */
-        @keyframes fingerMovement {
-            0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
-            8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; }
-            12% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 88px; left: 110px; }
-            16% { transform: scale(0); opacity: 0; top: 88px; left: 110px; }
-            30% { transform: scale(0); opacity: 0; top: 46px; left: 110px; }
-            36% { transform: scale(1); opacity: 1; top: 46px; left: 110px; }
-            40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 46px; left: 110px; }
-            45%, 100% { transform: scale(0); opacity: 0; }
-        }
+        @keyframes fingerMovement { 0% { transform: scale(0); opacity: 0; top: 88px; left: 110px; } 8% { transform: scale(1); opacity: 1; top: 88px; left: 110px; } 12% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 88px; left: 110px; } 16% { transform: scale(0); opacity: 0; top: 88px; left: 110px; } 30% { transform: scale(0); opacity: 0; top: 46px; left: 110px; } 36% { transform: scale(1); opacity: 1; top: 46px; left: 110px; } 40% { transform: scale(0.8); background: rgba(255,255,255,0.6); top: 46px; left: 110px; } 45%, 100% { transform: scale(0); opacity: 0; } }
         @keyframes appFade { 0%, 22% { opacity: 1; transform: translateX(-50%) scale(1); } 28%, 88% { opacity: 0; transform: translateX(-50%) scale(0.6); } 94%, 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
         @keyframes barFade { 0%, 25% { opacity: 0; transform: translateY(-5px); } 28%, 44% { opacity: 1; transform: translateY(0); color: #8e8e93; } 50%, 88% { opacity: 1; transform: translateY(0); color: #007aff; } 94%, 100% { opacity: 0; transform: translateY(-5px); } }
         
-        .mock-browser-bar::before { content: '搜尋或輸入網址'; animation: urlPaste 6s infinite; }
-        @keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: 'dyhu.org/register.php'; } 94%, 100% { content: '搜尋或輸入網址'; } }
-
-        /* 🌟 核心優化：單行字幕跑馬燈時間軸 */
+        /* 為了讓動畫裡的網址文字也隨變數更動，我們用 JS 來控制，這裡把原本固定的 css content 改掉 */
         @keyframes textSubtitleSync {
             0%, 22% { content: '步驟 1：請先退回手機主畫面桌面'; }
             28%, 46% { content: '步驟 2：在桌面點擊開啟 🧭 Safari 瀏覽器'; }
@@ -110,24 +56,20 @@
     <!-- ==================== 【iOS 智慧引導區塊】 ==================== -->
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
-        <h2>請複製網址至 Safari 註冊</h2>
-        <p>因系統限制無法直接開啟，請點擊下方按鈕：</p>
+        <h2 id="ios-title">請複製網址至 Safari 註冊</h2>
+        <p id="ios-desc">因系統限制無法直接開啟，請點擊下方按鈕：</p>
         
-        <button class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
+        <button id="ios-btn" class="copy-btn" onclick="copyTargetUrl()">📋 點我複製註冊網址</button>
 
-        <!-- 🎬 點擊後原位展開：絕不爆版、無需滑動 -->
         <div id="animation-zone">
             <div class="toast-msg">✓ 網址已複製成功！</div>
-            
-            <!-- 一體化操作手機（動畫與文字解說完全融合在裡面） -->
             <div class="mock-phone">
                 <div class="mock-notch"></div>
                 <div class="mock-finger"></div>
                 <div class="mock-screen">
                     <div class="mock-safari-app"></div>
-                    <div class="mock-browser-bar"></div>
+                    <div id="mock-url-text" class="mock-browser-bar"></div>
                 </div>
-                <!-- 底部固定解說中樞 -->
                 <div class="phone-instruction-dock">
                     <span class="mini-badge">操作提示</span>
                     <div class="mini-text"></div>
@@ -144,21 +86,73 @@
         <a id="android-link" href="#" class="copy-btn" style="text-align: center; background-color: #34c759; box-shadow: 0 4px 12px rgba(52,199,89,0.2);">手動開啟預設瀏覽器</a>
     </div>
 
-    <script type="text/javascript">
-        var targetWebUrl = "dyhu.org/register.php"; 
-        var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
-        
-        var ua = navigator.userAgent.toLowerCase();
-        var isAndroid = ua.indexOf("android") > -1;
+    <!-- ==================== 【⚖ 異常環境攔截區塊】 ==================== -->
+    <div id="block-zone" class="container" style="display: none; border-top: 6px solid #ff3b30;">
+        <div style="font-size: 40px; margin-bottom: 8px;">⚠️</div>
+        <h2>設備環境異常</h2>
+        <p style="color: #ff3b30; font-weight: bold; margin-bottom: 0;">安全機制已啟動，不支援電腦、模擬器環境操作。請換回真正的智慧型手機開啟此網頁。</p>
+    </div>
 
-        if (isAndroid) {
+    <script type="text/javascript">
+        // =================================================================
+        // 🌟 【超級懶人設定區】以後不管換什麼網址，只要改這一行即可！
+        // 🌟 注意：前面不要寫 https://，後面可以接路徑，例如 "google.com" 或 "abc.com/reg.php"
+        // =================================================================
+        var targetWebUrl = "dyhu.org/register.php"; 
+        
+        // =================================================================
+        // 以下為自動核心運算邏輯，請勿更動
+        // =================================================================
+        
+        // 動態將新網址注入到 CSS 動態動畫中，這樣連小手機動畫裡的網址也會一起改
+        var styleSheet = document.createElement("style");
+        styleSheet.innerText = "@keyframes urlPaste { 0%, 46% { content: '搜尋或輸入網址'; } 52%, 88% { content: '" + targetWebUrl + "'; } 94%, 100% { content: '搜尋或輸入網址'; } }";
+        document.head.appendChild(styleSheet);
+
+        var androidIntent = "intent://" + targetWebUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end";
+        var ua = navigator.userAgent.toLowerCase();
+        
+        // 1. 環境特徵判定
+        var isAndroid = ua.indexOf("android") > -1;
+        var isIos = (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1 || ua.indexOf("ipod") > -1);
+        var isFbBrowser = (ua.indexOf("fban") > -1 || ua.indexOf("fbav") > -1);
+        var hasTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+        var isDesktopSize = window.innerWidth > 1024;
+
+        // 2. 分流邏輯執行
+        if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
+            document.getElementById("block-zone").style.display = "block";
+            alert("安全提示：請使用真實的智慧型手機開啟此實名註冊頁面。");
+        } 
+        else if (isAndroid) {
             document.getElementById("android-zone").style.display = "block";
             document.getElementById("android-link").href = androidIntent;
             window.location.href = androidIntent;
-        } else {
+        } 
+        else if (isIos) {
             document.getElementById("ios-zone").style.display = "block";
+            
+            // 使用者脫離 FB，成功進入真正的 iOS Safari 環境
+            if (!isFbBrowser && ua.indexOf("safari") > -1 && ua.indexOf("crios") === -1 && ua.indexOf("fxios") === -1) {
+                document.getElementById("ios-title").innerText = "安全檢查通過";
+                document.getElementById("ios-desc").innerText = "您已成功使用真實 Safari 瀏覽器，正在為您載入最終註冊頁面...";
+                document.getElementById("ios-btn").style.display = "none";
+                
+                // 自動幫使用者跳轉到真正的目標註冊頁
+                setTimeout(function() {
+                    window.location.href = "https://" + targetWebUrl;
+                }, 800);
+            }
+        } 
+        else if (hasTouch) {
+            document.getElementById("android-zone").style.display = "block";
+            document.getElementById("android-link").href = "https://" + targetWebUrl;
+        } 
+        else {
+            document.getElementById("block-zone").style.display = "block";
         }
 
+        // 複製按鈕功能
         function copyTargetUrl() {
             var finalCopyUrl = "https://" + targetWebUrl;
             var tempInput = document.createElement("input");
