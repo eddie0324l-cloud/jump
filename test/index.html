@@ -7,38 +7,52 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f2f2f7; margin: 0; padding: 12px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { text-align: center; max-width: 360px; width: 100%; background: white; padding: 24px 16px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); box-sizing: border-box; }
+        
+        /* iOS 專用樣式 */
         .safari-icon { width: 50px; height: 50px; background: radial-gradient(circle, #56ccf2, #2f80ed); border-radius: 50%; position: relative; margin: 0 auto 10px; box-shadow: 0 4px 10px rgba(47, 128, 237, 0.3); }
         .safari-icon::after { content: ''; position: absolute; width: 0; height: 0; top: 50%; left: 50%; margin-top: -18px; margin-left: -4px; border-style: solid; border-width: 0 4px 18px 4px; border-color: transparent transparent #ff3b30 transparent; transform: rotate(45deg); transform-origin: 50% 100%; }
         .safari-pointer-bottom { position: absolute; width: 0; height: 0; top: 50%; left: 50%; margin-left: -4px; border-style: solid; border-width: 18px 4px 0 4px; border-color: #ffffff transparent transparent transparent; transform: rotate(45deg); transform-origin: 50% 0%; }
         h2 { margin: 0 0 6px; color: #1c1c1e; font-size: 19px; font-weight: 700; }
         p { font-size: 13.5px; color: #3a3a3c; line-height: 1.4; text-align: center; margin: 0 0 18px; }
         .copy-btn { display: block; width: 100%; padding: 14px; background-color: #007aff; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,123,255,0.2); }
-        #animation-zone { display: none; margin-top: 18px; }
+        
+        /* 載入中動畫（針對安卓秒轉前的過場） */
+        .loading-spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #34c759; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- iOS 限制區：提示複製網址 -->
+    <!-- 🔄 Android & 一般外開環境：秒轉跳過場 -->
+    <div id="redirect-zone" class="container" style="display: none; border-top: 6px solid #34c759;">
+        <div class="loading-spinner"></div>
+        <h2>安全環境驗證成功</h2>
+        <p style="color: #666; margin-bottom: 5px;">正在為您加密連線...</p>
+    </div>
+
+    <!-- 🧭 iOS 限制區：提示複製網址（精確引導至 select 頁面） -->
     <div id="ios-zone" class="container" style="display: none; border-top: 6px solid #007aff;">
         <div class="safari-icon"><div class="safari-pointer-bottom"></div></div>
         <h2>請複製網址至 Safari 開啟</h2>
-        <p>因內建瀏覽器安全性限制，請點擊下方按鈕複製網址，並打開手機自帶的 Safari 瀏覽器貼上前往：</p>
-        <button class="copy-btn" onclick="copyCurrentUrl()">📋 點我複製網址</button>
-        <div id="animation-zone" style="color: #34c759; font-weight: bold; margin-top: 15px;">✓ 網址已複製，請切換至 Safari 貼上！</div>
+        <p>因內建瀏覽器安全性限制，請點擊下方按鈕複製網址，並打開手機自帶的 🧭 **Safari 瀏覽器** 貼上前往官方網站：</p>
+        <button class="copy-btn" onclick="copySelectUrl()">📋 點我複製網址</button>
+        <div id="animation-zone" style="display: none; color: #34c759; font-weight: bold; margin-top: 15px;">✓ 網址已複製，請切換至 Safari 貼上！</div>
     </div>
 
-    <!-- 攔截區：電腦或模擬器 -->
+    <!-- ⚖️ 攔截區：電腦或模擬器 -->
     <div id="block-zone" class="container" style="display: none; border-top: 6px solid #ff3b30;">
         <div style="font-size: 40px; margin-bottom: 8px;">⚠️</div>
         <h2>設備環境異常</h2>
-        <p style="color: #ff3b30; font-weight: bold;">安全機制已啟動，不支援電腦環境操作。請換回真實手機開啟。</p>
+        <p style="color: #ff3b30; font-weight: bold; margin-bottom: 0;">安全機制已啟動，不支援電腦環境操作。請換回真實智慧型手機開啟此連結。</p>
     </div>
 
     <script type="text/javascript">
-        // 💡 核心跳轉設定：驗證成功後，要外跳到的「選擇頁面」網址
-        // 建議上傳後，把第二個檔案改名為 select.html 並把路徑填在下方
+        // =================================================================
+        // 💡 核心設定：請在下方填入你第二個檔案（選擇頁面 select.html）的完整網址
+        // =================================================================
         var targetSelectPage = "https://eddie0324l-cloud.github.io/jump/test/select.html"; 
 
+        // 環境偵測
         var ua = navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf("android") > -1;
         var isIos = (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1 || ua.indexOf("ipod") > -1);
@@ -46,26 +60,41 @@
         var hasTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
         var isDesktopSize = window.innerWidth > 1024;
 
+        // ==================== 🛠️ 分流核心邏輯 ====================
+
         if (isDesktopSize || (!hasTouch && (isAndroid || isIos))) {
-            // 電腦或模擬器阻擋
+            // 1. 電腦或模擬器 ➡️ 攔截鎖死
             document.getElementById("block-zone").style.display = "block";
+            alert("安全提示：請使用真實的智慧型手機開啟此頁面。");
         } 
         else if (isIos && isFbBrowser) {
-            // iOS 在 App 內，強迫顯示複製引導
+            // 2. iOS 在 LINE/FB 內 ➡️ 卡在 index 頁面，顯示複製引導字卡
             document.getElementById("ios-zone").style.display = "block";
         } 
         else {
-            // 🌟 關鍵改動：Android 或已經在外部瀏覽器的 iOS，直接「秒跳轉」到選擇頁
-            window.location.replace(targetSelectPage);
+            // 3. Android（不管在不在 App 內）或 已經在 Safari 的 iOS
+            // ➡️ 啟動最初最棒的「自動秒轉能力」，直接送去 select.html
+            document.getElementById("redirect-zone").style.display = "block";
+            
+            // 使用最高權限的 location.replace 進行秒轉，不留歷史紀錄，防客戶返回
+            setTimeout(function() {
+                window.location.replace(targetSelectPage);
+            }, 300); 
         }
 
-        function copyCurrentUrl() {
+        // 💡 核心功能：iOS 客戶點擊時，直接複製 select.html 的網址
+        function copySelectUrl() {
             var tempInput = document.createElement("input");
-            tempInput.value = window.location.href;
+            tempInput.value = targetSelectPage; // 這裡直接帶入設定好的選擇頁網址
             document.body.appendChild(tempInput);
             tempInput.select();
-            document.execCommand("copy");
-            document.getElementById("animation-zone").style.display = "block";
+            tempInput.setSelectionRange(0, 99999);
+            try {
+                document.execCommand("copy");
+                document.getElementById("animation-zone").style.display = "block";
+            } catch (err) {
+                alert("複製失敗，請手動複製網址。");
+            }
             document.body.removeChild(tempInput);
         }
     </script>
