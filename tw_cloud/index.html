@@ -3,73 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>官方服務入口</title>
+    <title>官方服務入口 | 申辦中心</title>
     <style>
-        body { margin: 0; background: #050505; height: 100vh; overflow: hidden; font-family: sans-serif; }
+        :root { --primary-color: #0056b3; --bg-color: #f8f9fa; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* 金幣雨背景 */
-        .gold-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .coin { position: absolute; color: #ffd700; font-size: 20px; animation: fall linear infinite; opacity: 0.4; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* 泡泡風格 */
-        .bubble { 
-            position: absolute; width: 150px; height: 150px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            color: #fff; font-weight: bold; text-decoration: none;
-            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            transition: transform 0.2s; z-index: 1; cursor: pointer;
-        }
-        .bubble:hover { transform: scale(1.1); }
-        .b1 { background: rgba(79, 172, 254, 0.3); }
-        .b2 { background: rgba(118, 75, 162, 0.3); }
-        .b3 { background: rgba(253, 160, 133, 0.3); }
+        /* 官方風格導航 */
+        header { background: white; padding: 20px; border-bottom: 3px solid var(--primary-color); text-align: center; font-weight: bold; font-size: 18px; color: #333; }
+        
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { text-align: center; max-width: 400px; width: 100%; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e9ecef; }
+        
+        h2 { color: #212529; margin-bottom: 15px; }
+        .hint-text { color: #6c757d; font-size: 15px; margin-bottom: 30px; line-height: 1.6; }
+        
+        .site-btn { display: block; width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #dee2e6; color: #495057; text-decoration: none; border-radius: 4px; font-weight: 600; text-align: center; transition: all 0.2s; }
+        .site-btn:hover { background: #f1f3f5; border-color: #adb5bd; }
+        
+        footer { padding: 20px; text-align: center; color: #adb5bd; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <div id="rain" class="gold-rain"></div>
+    <header>官方申辦服務中心</header>
 
-    <a href="https://lin.ee/SQJxNtp" class="bubble b1" id="bub1">急速金</a>
-    <a href="https://lin.ee/pjknVQF" class="bubble b2" id="bub2">鈔安心</a>
-    <a href="https://lin.ee/zRInWfe" class="bubble b3" id="bub3">貸好運</a>
+    <main>
+        <div class="container">
+            <div style="font-size: 40px; margin-bottom: 10px;">🏢</div>
+            <h2>服務申辦導引</h2>
+            <p id="hint-text" class="hint-text"></p>
+            
+            <div id="select-zone">
+                <a href="https://lin.ee/SQJxNtp" class="site-btn">急速金 官方Line</a>
+                <a href="https://lin.ee/pjknVQF" class="site-btn">鈔安心 官方Line</a>
+                <a href="https://lin.ee/zRInWfe" class="site-btn">貸好運 官方Line</a>
+            </div>
+        </div>
+    </main>
 
-    <script>
-        // 金幣雨
-        const rain = document.getElementById('rain');
-        for(let i=0; i<15; i++) {
-            const c = document.createElement('div');
-            c.innerHTML = '💰'; c.className = 'coin';
-            c.style.left = Math.random()*100 + '%';
-            c.style.animationDuration = (Math.random()*3+2) + 's';
-            c.style.animationDelay = Math.random()*5 + 's';
-            rain.appendChild(c);
-        }
+    <footer>© 2026 官方服務中心。此頁面為受權正式申辦管道。</footer>
 
-        // 螢幕保護程式碰撞邏輯
-        const bubbles = [document.getElementById('bub1'), document.getElementById('bub2'), document.getElementById('bub3')];
-        let pos = bubbles.map(() => ({ 
-            x: Math.random() * (window.innerWidth - 150), 
-            y: Math.random() * (window.innerHeight - 150),
-            vx: (Math.random() - 0.5) * 4, 
-            vy: (Math.random() - 0.5) * 4 
-        }));
+    <script type="text/javascript">
+        // 隨機提示詞
+        var hints = [
+            "請點擊任一個您喜歡的商家，系統將立即引導您前往申辦流程。",
+            "建議您挑選喜愛的商家，點擊後即可快速前往線上申辦服務。",
+            "請選擇任一商家點擊進入，我們將為您開啟專屬的官方申請通道。"
+        ];
+        document.getElementById("hint-text").innerText = hints[Math.floor(Math.random() * hints.length)];
 
-        function animate() {
-            bubbles.forEach((b, i) => {
-                pos[i].x += pos[i].vx;
-                pos[i].y += pos[i].vy;
-
-                if (pos[i].x <= 0 || pos[i].x >= window.innerWidth - 150) pos[i].vx *= -1;
-                if (pos[i].y <= 0 || pos[i].y >= window.innerHeight - 150) pos[i].vy *= -1;
-
-                b.style.left = pos[i].x + 'px';
-                b.style.top = pos[i].y + 'px';
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        // 隨機按鈕排序
+        var parent = document.getElementById("select-zone");
+        var buttons = Array.from(parent.children);
+        buttons.sort(() => 0.5 - Math.random());
+        buttons.forEach(btn => parent.appendChild(btn));
     </script>
 </body>
 </html>
