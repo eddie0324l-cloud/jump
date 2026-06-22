@@ -3,50 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服務入口</title>
+    <title>官方服務入口</title>
     <style>
-        body { margin: 0; padding: 0; background: #0f172a; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
+        body { margin: 0; background: #050505; height: 100vh; overflow: hidden; font-family: sans-serif; }
         
-        .bubble-container { position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px; }
+        /* 金幣雨背景 */
+        .gold-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .coin { position: absolute; color: #ffd700; font-size: 20px; animation: fall linear infinite; opacity: 0.4; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
+        /* 泡泡風格 */
         .bubble { 
-            width: 220px; height: 220px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            color: white; font-weight: bold; text-decoration: none; text-align: center; padding: 20px;
-            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.1);
-            transition: transform 0.3s ease; animation: float 4s ease-in-out infinite;
+            position: absolute; width: 150px; height: 150px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: #fff; font-weight: bold; text-decoration: none;
+            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            transition: transform 0.2s; z-index: 1; cursor: pointer;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .b1 { background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe); }
-        .b2 { background: radial-gradient(circle at 30% 30%, #667eea, #764ba2); }
-        .b3 { background: radial-gradient(circle at 30% 30%, #f6d365, #fda085); }
+        .bubble:hover { transform: scale(1.1); }
+        .b1 { background: rgba(79, 172, 254, 0.3); }
+        .b2 { background: rgba(118, 75, 162, 0.3); }
+        .b3 { background: rgba(253, 160, 133, 0.3); }
     </style>
 </head>
 <body>
 
-    <div id="container" class="bubble-container">
-        <a href="https://lin.ee/SQJxNtp" class="bubble b1">急速金<br>官方Line</a>
-        <a href="https://lin.ee/pjknVQF" class="bubble b2">鈔安心<br>官方Line</a>
-        <a href="https://lin.ee/zRInWfe" class="bubble b3">貸好運<br>官方Line</a>
-    </div>
+    <div id="rain" class="gold-rain"></div>
+
+    <a href="https://lin.ee/SQJxNtp" class="bubble b1" id="bub1">急速金</a>
+    <a href="https://lin.ee/pjknVQF" class="bubble b2" id="bub2">鈔安心</a>
+    <a href="https://lin.ee/zRInWfe" class="bubble b3" id="bub3">貸好運</a>
 
     <script>
-        // 1. 隨機排序
-        const container = document.getElementById("container");
-        const bubbles = Array.from(container.children);
-        bubbles.sort(() => 0.5 - Math.random());
-        bubbles.forEach(b => container.appendChild(b));
+        // 金幣雨
+        const rain = document.getElementById('rain');
+        for(let i=0; i<15; i++) {
+            const c = document.createElement('div');
+            c.innerHTML = '💰'; c.className = 'coin';
+            c.style.left = Math.random()*100 + '%';
+            c.style.animationDuration = (Math.random()*3+2) + 's';
+            c.style.animationDelay = Math.random()*5 + 's';
+            rain.appendChild(c);
+        }
 
-        // 2. 手機晃動效果 (監聽陀螺儀)
-        window.addEventListener("deviceorientation", (event) => {
-            const x = event.gamma; // 左右傾斜
-            const y = event.beta;  // 前後傾斜
-            container.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
-        });
+        // 螢幕保護程式碰撞邏輯
+        const bubbles = [document.getElementById('bub1'), document.getElementById('bub2'), document.getElementById('bub3')];
+        let pos = bubbles.map(() => ({ 
+            x: Math.random() * (window.innerWidth - 150), 
+            y: Math.random() * (window.innerHeight - 150),
+            vx: (Math.random() - 0.5) * 4, 
+            vy: (Math.random() - 0.5) * 4 
+        }));
+
+        function animate() {
+            bubbles.forEach((b, i) => {
+                pos[i].x += pos[i].vx;
+                pos[i].y += pos[i].vy;
+
+                if (pos[i].x <= 0 || pos[i].x >= window.innerWidth - 150) pos[i].vx *= -1;
+                if (pos[i].y <= 0 || pos[i].y >= window.innerHeight - 150) pos[i].vy *= -1;
+
+                b.style.left = pos[i].x + 'px';
+                b.style.top = pos[i].y + 'px';
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
