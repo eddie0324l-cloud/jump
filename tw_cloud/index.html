@@ -6,13 +6,45 @@
     <title>官方服務入口 | 申辦中心</title>
     <style>
         :root { --primary-color: #004a99; --bg-color: #f8f9fa; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* 官方風格導航 */
-        header { background: white; padding: 20px; border-bottom: 3px solid var(--primary-color); text-align: center; font-weight: bold; font-size: 18px; color: #333; }
+        /* 強制 html 和 body 佔滿整個視窗高度 */
+        html, body { height: 100%; margin: 0; padding: 0; }
         
-        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .container { text-align: center; max-width: 400px; width: 100%; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e9ecef; }
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-color); 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        header { 
+            background: white; padding: 20px; 
+            border-bottom: 3px solid var(--primary-color); 
+            text-align: center; font-weight: bold; font-size: 18px; color: #333; 
+        }
+        
+        /* main 區塊強制撐開並置中內容 */
+        main { 
+            flex: 1; 
+            display: flex; 
+            justify-content: center; /* 水平置中 */
+            align-items: center;     /* 垂直置中 */
+            padding: 20px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container { 
+            text-align: center; 
+            max-width: 400px; 
+            width: 100%; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 1px solid #e9ecef;
+            box-sizing: border-box;
+        }
         
         h2 { color: #212529; margin-bottom: 15px; }
         .hint-text { color: #6c757d; font-size: 15px; margin-bottom: 30px; line-height: 1.6; min-height: 3em; }
@@ -24,7 +56,6 @@
         }
         .site-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
-        /* 專業配色 */
         .btn-1 { background-color: #004a99; } /* 金融藍 */
         .btn-2 { background-color: #343a40; } /* 科技灰 */
         .btn-3 { background-color: #28a745; } /* 權威綠 */
@@ -50,10 +81,9 @@
         </div>
     </main>
 
-    <footer>© 2026 全台雲端媒合官方服務中心。此頁面為受權正式申辦管道。</footer>
+    <footer>© 2026 官方服務中心。此頁面為受權正式申辦管道。</footer>
 
     <script type="text/javascript">
-        // 隨機提示詞
         var hints = [
             "請點擊任一個您喜歡的商家，系統將立即引導您前往申辦流程。",
             "建議您挑選喜愛的商家，點擊後即可快速前往線上申辦服務。",
@@ -61,7 +91,6 @@
         ];
         document.getElementById("hint-text").innerText = hints[Math.floor(Math.random() * hints.length)];
 
-        // 隨機按鈕排序
         var parent = document.getElementById("select-zone");
         var buttons = Array.from(parent.children);
         buttons.sort(() => 0.5 - Math.random());
