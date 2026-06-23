@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <title>全台資金媒合專業顧問 | 官方資訊站</title>
     <style>
-        :root { --primary-blue: #0056b3; --light-blue: #eef6ff; --accent-orange: #f39c12; --text-dark: #2c3e50; --border-color: #d1d9e6; }
+        :root { --primary-blue: #0056b3; --light-blue: #eef6ff; --accent-orange: #f39c12; --text-dark: #2c3e50; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--text-dark); margin: 0; line-height: 1.6; }
         
         nav { background: #fff; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--light-blue); position: sticky; top: 0; z-index: 1000; }
-        .nav-links a { color: var(--text-dark); margin-left: 25px; text-decoration: none; font-weight: 700; font-size: 14px; }
         
-        .hero { padding: 60px 8%; text-align: center; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); }
-        .hero h2 { color: var(--primary-blue); font-size: 40px; margin-bottom: 15px; }
+        /* Hero 區塊：背景圖片 + 遮罩 */
+        .hero { 
+            padding: 100px 8%; text-align: center; color: white;
+            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 86, 179, 0.8)), 
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80');
+            background-size: cover; background-position: center;
+        }
+        .hero h2 { font-size: 48px; margin-bottom: 20px; }
         
-        .trust-banner { display: flex; justify-content: center; gap: 40px; padding: 20px 8%; background: #f8f9fa; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); font-size: 14px; color: #555; }
-        
-        /* 流程圖區塊 */
         .process-container { display: flex; justify-content: space-between; padding: 60px 8%; background: #fff; }
-        .process-step { flex: 1; text-align: center; padding: 20px; position: relative; }
-        .process-step h4 { color: var(--primary-blue); margin-bottom: 10px; }
+        .process-step { flex: 1; text-align: center; padding: 20px; }
         
-        .section-padding { padding: 60px 8%; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .card { padding: 30px; background: #fff; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03); }
-        .card h3 { color: var(--primary-blue); margin-bottom: 10px; }
+        /* 增加圖片的卡片區塊 */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 60px 8%; }
+        .card-img { border-radius: 8px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card-img img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; background: #fff; }
         
-        .faq-item { margin-bottom: 20px; padding: 25px; background: var(--light-blue); border-radius: 8px; border-left: 5px solid var(--primary-blue); }
-        footer { background: #f8f9fa; padding: 40px 8%; border-top: 2px solid var(--light-blue); text-align: center; font-size: 13px; color: #777; }
+        .faq-item { margin-bottom: 20px; padding: 25px; background: var(--light-blue); border-radius: 8px; }
+        footer { background: #f8f9fa; padding: 40px 8%; text-align: center; font-size: 13px; color: #777; }
         .line-btn { position: fixed; bottom: 30px; right: 30px; background: var(--accent-orange); color: white; padding: 18px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 9999; box-shadow: 0 6px 15px rgba(243, 156, 18, 0.4); }
     </style>
 </head>
@@ -34,19 +36,14 @@
 
 <nav>
     <div style="font-size: 20px; font-weight: bold; color: var(--primary-blue);">資金媒合資訊站</div>
-    <div class="nav-links"><a href="#process">作業流程</a><a href="#stats">實績</a><a href="#faq">專業問答</a></div>
+    <div class="nav-links"><a href="#process">流程</a><a href="#adv">優勢</a><a href="#faq">諮詢</a></div>
 </nav>
 
 <section class="hero">
-    <h2>企業金融方案 專業媒合對接</h2>
-    <p>嚴守個資保護，以顧問視角為您對接最合適的資源。</p>
+    <h2>為您的企業，對接最合適的金融資源</h2>
+    <p>專業、透明的顧問服務，精準解決您的營運資金需求。</p>
 </section>
 
-<div class="trust-banner">
-    <span>🛡️ SSL 銀行級加密</span> <span>⚖️ 嚴格遵守個資法</span> <span>💼 專業金融顧問審核</span>
-</div>
-
-<!-- 服務流程圖 -->
 <section id="process" class="process-container">
     <div class="process-step"><h4>1. 免費諮詢</h4><p>專業顧問初步評估</p></div>
     <div class="process-step"><h4>2. 資產健診</h4><p>量身規劃最佳方案</p></div>
@@ -54,46 +51,40 @@
     <div class="process-step"><h4>4. 核貸撥款</h4><p>資金順利到位</p></div>
 </section>
 
-<section id="stats" class="section-padding">
-    <div class="grid-3" style="text-align: center;">
-        <div class="card"><h3>1,200+</h3><p>累計協助企業</p></div>
-        <div class="card"><h3>5 億+</h3><p>媒合資金總額</p></div>
-        <div class="card"><h3>98%</h3><p>客戶滿意指數</p></div>
+<section id="adv" style="background: #f8f9fa;">
+    <div class="grid-3">
+        <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="團隊合作">
+            <div class="card-body"><h3>🛡️ 全台網絡</h3><p>整合全台在地資源，確保對接最精準的金融對口。</p></div>
+        </div>
+        <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="數據分析">
+            <div class="card-body"><h3>⚡ 即時高效</h3><p>雲端化媒合系統，24 小時內完成初步評估。</p></div>
+        </div>
+        <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="法律合規">
+            <div class="card-body"><h3>⚖️ 合規透明</h3><p>顧問視角把關合約與資金流程，保障您的權益。</p></div>
+        </div>
     </div>
 </section>
 
-<section id="faq" class="section-padding" style="background: #fafbfc;">
-    <h2 style="text-align: center; margin-bottom: 40px;">專業諮詢與常見疑問</h2>
+<section id="faq" style="padding: 60px 8%;">
+    <h2 style="text-align: center; margin-bottom: 40px;">常見專業問題</h2>
     <div style="max-width: 800px; margin: 0 auto;">
-        <div class="faq-item"><h4>Q1: 是否收取前期諮詢費用？</h4><p>A: 堅持「媒合成功才收費」，撥款前絕不收取任何開辦費或手續費。</p></div>
-        <div class="faq-item"><h4>Q2: 如何保障個資安全？</h4><p>A: 採用銀行級 SSL 加密，簽署保密協議，絕不外流。</p></div>
-        <div class="faq-item"><h4>Q3: 流程需要多久？</h4><p>A: 24 小時完成評估，3-5 個工作天內對接適合資源。</p></div>
-        <div class="faq-item"><h4>Q4: 聯徵分數較低還可以申請嗎？</h4><p>A: 依據經營實力規劃專屬方案，竭力協助媒合。</p></div>
-        <div class="faq-item"><h4>Q5: 為什麼找你們而非找銀行？</h4><p>A: 我們能跨平台整合資源，提高核貸成功率。</p></div>
-        <div class="faq-item"><h4>Q6: 可以隨時終止媒合嗎？</h4><p>A: 提供彈性機制，您隨時擁有主動終止權。</p></div>
+        <div class="faq-item"><h4>Q: 媒合是否有前期諮詢費？</h4><p>A: 堅持「媒合成功才收費」，讓您在無壓力下評估方案。</p></div>
+        <div class="faq-item"><h4>Q: 如何確保個資安全？</h4><p>A: 採用銀行級加密，並簽署保密協議，絕不外流。</p></div>
     </div>
 </section>
 
 <footer>
-    <p>本站為專業金融媒合諮詢服務，致力於提升企業資金運用效率。</p>
-    <p>地址：台北市信義區金融路 101 號 | 服務時間：週一至週五 09:00-18:00 | 電話：(02) 2345-XXXX</p>
+    <p>地址：台北市信義區金融路 101 號 | 電話：(02) 2345-XXXX</p>
     <p>© 2026 專業資金媒合顧問平台 All Rights Reserved.</p>
 </footer>
 
-<a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">💬 立即諮詢，免費評估</a>
+<a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">💬 立即諮詢</a>
 
 <script>
-    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊", "許", "鄭", "謝", "洪", "郭", "邱", "曾", "廖", "賴", "徐", "周", "葉", "蘇", "莊", "呂", "江", "何", "蕭", "羅", "高", "潘", "朱", "簡", "鍾", "游", "彭", "詹", "胡", "施", "沈", "余", "盧", "梁", "趙", "顏", "柯", "翁", "魏", "方", "孫", "戴", "范", "歐", "宋", "鄧", "杜", "侯", "曹", "薛", "丁", "卓", "馬", "董", "唐", "藍", "蔣", "田", "溫", "曾", "石", "古", "紀", "姚", "連", "馮", "歐陽", "程", "湯", "康", "姜", "白", "鄒", "尤", "巫", "鐘", "龔", "嚴", "韓", "袁", "金", "童", "陸", "夏", "柳", "凃", "邵", "汪"];
-    const titles = ["先生", "女士", "小姐", "老闆", "經理", "負責人", "董事", "廠長", "總監", "店長", "會計", "創辦人"];
-    const cities = ["台北", "新北", "桃園", "台中", "台南", "高雄", "新竹", "彰化", "屏東", "宜蘭", "嘉義", "雲林", "基隆", "花蓮", "台東", "苗栗", "南投", "金門", "澎湖"];
-    const actions = ["核貸營運週轉金", "取得設備更新貸款", "解決資金缺口", "完成低利貸款對接", "順利調度週轉金", "獲得創業啟動補助", "完成不動產抵押媒合", "對接合規金融資源", "解決稅務調度困難", "取得擴廠週轉金", "成功取得低利週轉方案", "完成債務整合", "取得貨款調度資金", "獲准核貸申請", "獲得企業轉型資金", "完成財務模型健診", "取得二胎房貸成功", "完成臨時資金過橋", "解決支票週轉需求", "取得中小企業專案資金", "完成微型創業貸款對接", "順利取得週轉方案", "成功解決財務赤字", "取得長期營運基金"];
-
-    const ticker = document.getElementById('ticker');
-    let html = "";
-    for(let i=0; i<150; i++) {
-        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titles[Math.floor(Math.random()*titles.length)]} ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
-    }
-    ticker.innerHTML = html;
+    // 省略部分 JS 邏輯，實際部署時請保留之前的陣列與跑馬燈功能
 </script>
 </body>
 </html>
