@@ -3,67 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全台雲端媒合資訊站</title>
+    <title>全台領先資金媒合服務</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Noto Serif TC', serif; margin: 0; color: #333; background: #f8f9fa; }
-        .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Serif TC', serif; color: #333; background: #f8f9fa; }
         
-        /* 標題與 Banner */
-        .main-title { text-align: center; font-size: 36px; color: #1a2a3a; margin-top: 40px; letter-spacing: 2px; }
-        .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center; }
+        .hero { 
+            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); 
+            background-size: cover; background-position: center; color: white; padding: 120px 20px; text-align: center; 
+        }
 
-        /* 跑馬燈：移至區塊上方 */
-        .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 10px 0; overflow: hidden; white-space: nowrap; height: 35px; margin-top: 40px; border-radius: 4px; }
+        .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 10px 0; overflow: hidden; white-space: nowrap; height: 40px; }
         #ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-size: 16px; font-weight: bold; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 案例區塊：亞洲專業面孔 */
+        .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
         .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 30px; }
-        .case-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .case-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.4s; }
+        .case-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         .case-img { width: 100%; height: 200px; object-fit: cover; }
         .case-content { padding: 25px; text-align: center; }
-        .case-content h3 { font-size: 19px; color: #2c3e50; }
         
-        /* 懸浮按鈕 */
         .fixed-contact { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
         .float-btn { display: block; width: 60px; height: 60px; margin-bottom: 10px; background: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+
+        @media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<header class="main-title">全台雲端媒合資訊站</header>
-
 <section class="hero">
-    <h2 style="font-size: 42px; margin-bottom: 20px;">安全‧快速‧專業的資金媒合</h2>
-    <p style="font-size: 20px;">深耕台灣在地資源，為您提供最即時的資金媒合方案。</p>
+    <h2 id="dynamic-title" style="font-size: 48px; margin-bottom: 20px; letter-spacing: 2px;"></h2>
+    <p style="font-size: 20px; opacity: 0.9;">專業諮詢，信賴共贏，為您對接高品質金融資源。</p>
 </section>
 
+<div class="ticker-wrap"><div id="ticker"></div></div>
+
 <div class="container">
-    <div class="ticker-wrap"><div id="ticker"></div></div>
-    
     <h2 style="text-align:center; color:#2c3e50; margin: 50px 0 30px 0; font-size: 32px;">成功媒合案例</h2>
     <div class="case-grid">
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80" alt="亞洲商務" class="case-img">
-            <div class="case-content">
-                <h3>【台中】精密製造業設備資金</h3>
-                <p>協助在地企業進行自動化轉型，順利取得擴產資金。</p>
-            </div>
+            <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80" alt="製造業" class="case-img">
+            <div class="case-content"><h3>精密製造業設備資金</h3><p>協助在地企業轉型，順利取得擴產資金。</p></div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="亞洲諮詢" class="case-img">
-            <div class="case-content">
-                <h3>【台北】金融科技諮詢媒合</h3>
-                <p>專業顧問一對一服務，確保您的資金周轉合規且透明。</p>
-            </div>
+            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="金融諮詢" class="case-img">
+            <div class="case-content"><h3>金融科技諮詢媒合</h3><p>專業顧問一對一服務，確保流程合規透明。</p></div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80" alt="亞洲團隊" class="case-img">
-            <div class="case-content">
-                <h3>【高雄】在地餐飲創業營運</h3>
-                <p>支持在地小微企業發展，從財務規劃到資金對接全程協助。</p>
-            </div>
+            <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80" alt="在地創業" class="case-img">
+            <div class="case-content"><h3>在地創業營運支援</h3><p>陪伴小型創業品牌，從規劃到對接全程協助。</p></div>
         </div>
     </div>
 </div>
@@ -74,15 +64,24 @@
 </div>
 
 <script>
+    // 1. 隨機標題邏輯
+    const titles = [
+        "全台領先 資金媒合 頂級顧問",
+        "深耕台灣。卓越資源媒合服務",
+        "資金媒合首選品牌。全台資源整合"
+    ];
+    document.getElementById('dynamic-title').innerText = titles[Math.floor(Math.random() * titles.length)];
+
+    // 2. 跑馬燈雜湊邏輯
     const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市"];
     const surnames = ["陳", "林", "黃", "張", "李", "王", "吳"];
-    const titles = ["先生", "小姐"];
-    const actions = ["成功媒合營運資金", "順利對接創業貸款", "圓滿解決資金周轉", "成功取得設備更新資金", "順利媒合個人週轉"];
+    const titlesTicker = ["先生", "小姐"];
+    const actions = ["成功媒合營運資金", "順利對接創業貸款", "圓滿解決資金周轉", "取得設備更新資金", "順利媒合個人週轉"];
 
     const ticker = document.getElementById('ticker');
     let html = "";
     for(let i=0; i<15; i++) {
-        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titles[Math.floor(Math.random()*titles.length)]} ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titlesTicker[Math.floor(Math.random()*titlesTicker.length)]} ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
     }
     ticker.innerHTML = html;
 </script>
