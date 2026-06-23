@@ -8,7 +8,7 @@
         :root { --primary-color: #004a99; --bg-color: #f8f9fa; }
         
         /* 強制 html 和 body 佔滿整個視窗高度 */
-        html, body { height: 100%; margin: 0; padding: 0; }
+        html, body { height: 100%; margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Segoe UI', Roboto, sans-serif; 
@@ -23,12 +23,12 @@
             text-align: center; font-weight: bold; font-size: 18px; color: #333; 
         }
         
-        /* main 區塊強制撐開並置中內容 */
+        /* main 區塊強制置中 */
         main { 
             flex: 1; 
             display: flex; 
-            justify-content: center; /* 水平置中 */
-            align-items: center;     /* 垂直置中 */
+            justify-content: center; 
+            align-items: center; 
             padding: 20px; 
             width: 100%;
             box-sizing: border-box;
@@ -49,10 +49,27 @@
         h2 { color: #212529; margin-bottom: 15px; }
         .hint-text { color: #6c757d; font-size: 15px; margin-bottom: 30px; line-height: 1.6; min-height: 3em; }
         
+        /* 按鈕區塊修正：使用 flex 與 gap 確保對齊 */
+        #select-zone { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 12px; 
+            width: 100%;
+        }
+        
         .site-btn { 
-            display: block; width: 100%; padding: 14px; margin-bottom: 12px; 
-            color: white; text-decoration: none; border-radius: 4px; 
-            font-weight: 600; text-align: center; transition: all 0.3s;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%; 
+            padding: 14px 0; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-weight: 600; 
+            transition: all 0.3s;
+            box-sizing: border-box; /* 關鍵：確保 padding 不會撐壞寬度 */
         }
         .site-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
@@ -81,9 +98,10 @@
         </div>
     </main>
 
-    <footer>© 2026 官方服務中心。此頁面為受權正式申辦管道。</footer>
+    <footer>© 2026 全台雲端媒合官方服務中心。此頁面為受權正式申辦管道。</footer>
 
     <script type="text/javascript">
+        // 隨機提示詞
         var hints = [
             "請點擊任一個您喜歡的商家，系統將立即引導您前往申辦流程。",
             "建議您挑選喜愛的商家，點擊後即可快速前往線上申辦服務。",
@@ -91,6 +109,7 @@
         ];
         document.getElementById("hint-text").innerText = hints[Math.floor(Math.random() * hints.length)];
 
+        // 隨機按鈕排序
         var parent = document.getElementById("select-zone");
         var buttons = Array.from(parent.children);
         buttons.sort(() => 0.5 - Math.random());
