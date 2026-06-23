@@ -8,21 +8,17 @@
         :root { --primary-blue: #004a99; --accent-orange: #f39c12; --text-dark: #2c3e50; --bg-light: #f9fbfd; }
         body { font-family: 'PingFang TC', 'Helvetica Neue', sans-serif; color: var(--text-dark); margin: 0; line-height: 1.7; background: #ffffff; }
         
-        /* 導航 */
         nav { background: #fff; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-links a { color: var(--primary-blue); margin-left: 15px; text-decoration: none; font-weight: 600; padding: 8px 18px; border: 1px solid var(--primary-blue); border-radius: 20px; transition: 0.3s; }
         .nav-links a:hover { background: var(--primary-blue); color: #fff; }
         
-        /* Hero 區塊 */
         .hero { padding: 120px 8%; text-align: center; color: white; background-size: cover; background-position: center; }
         .hero h1 { font-size: 40px; margin-bottom: 20px; }
         
-        /* 跑馬燈 */
         .ticker-wrap { background: var(--primary-blue); color: #fff; padding: 12px 0; overflow: hidden; white-space: nowrap; }
         #ticker { display: inline-block; padding-left: 100%; animation: ticker 400s linear infinite; font-weight: 700; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
         
-        /* 服務流程與卡片 */
         .section-padding { padding: 60px 8%; }
         .process-container { display: flex; justify-content: space-between; padding: 40px 8%; background: var(--bg-light); border-radius: 12px; margin: 0 8%; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 40px 8%; }
@@ -30,7 +26,6 @@
         .card-img:hover { transform: translateY(-10px); }
         .card-img img { width: 100%; height: 220px; object-fit: cover; }
         
-        /* FAQ */
         .faq-container { max-width: 800px; margin: 0 auto; }
         .faq-item { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
         .faq-item summary { padding: 20px; font-weight: bold; cursor: pointer; background: var(--bg-light); }
@@ -48,7 +43,7 @@
     </div>
 </nav>
 
-<section class="hero" style="background: linear-gradient(rgba(0, 74, 153, 0.8), rgba(0, 74, 153, 0.8)), url('https://placehold.co/1600x600/004a99/ffffff?text=Financial+Solutions');">
+<section class="hero" style="background: linear-gradient(rgba(0, 74, 153, 0.8), rgba(0, 74, 153, 0.8)), url('https://images.unsplash.com/photo-1554224155-8d04cb27cd6c?w=1600&q=80');">
     <h1>解決資金難關，重拾財務彈性</h1>
     <p>專業顧問 1 對 1 諮詢，為您量身打造低負擔還款方案。</p>
 </section>
@@ -66,28 +61,25 @@
 
 <section id="adv" class="grid-3">
     <div class="card-img">
-        <img src="https://placehold.co/800x400/004a99/ffffff?text=Customized+Planning" alt="個人規劃">
-        <div style="padding:20px;"><h3>💼 個人專屬規劃</h3><p>量身打造還款計畫，減輕每月負擔，重拾財務彈性。</p></div>
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="個人規劃">
+        <div style="padding:20px;"><h3>💼 個人專屬規劃</h3><p>量身打造還款計畫，減輕您的每月負擔，重拾財務彈性。</p></div>
     </div>
     <div class="card-img">
-        <img src="https://placehold.co/800x400/f39c12/ffffff?text=Zero+Consulting+Fee" alt="專業諮詢">
-        <div style="padding:20px;"><h3>⚡ 零前期費用</h3><p>過程透明，撥款前絕不收取任何開辦或諮詢費，保障權益。</p></div>
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="專業諮詢">
+        <div style="padding:20px;"><h3>⚡ 零前期費用</h3><p>全程免費線上評估，撥款前絕不收取任何開辦或諮詢費。</p></div>
     </div>
     <div class="card-img">
-        <img src="https://placehold.co/800x400/2c3e50/ffffff?text=Secure+Privacy" alt="隱私保護">
-        <div style="padding:20px;"><h3>🛡️ 隱私安心保障</h3><p>銀行級加密技術，全力保護您的個資安全與借貸隱私。</p></div>
+        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80" alt="隱私保護">
+        <div style="padding:20px;"><h3>🛡️ 隱私安心保障</h3><p>採用銀行級加密技術，全力保護您的個資安全與借貸隱私。</p></div>
     </div>
 </section>
 
 <section id="faq" class="section-padding">
     <h2 style="text-align: center; margin-bottom: 40px;">個人用戶常見疑問</h2>
     <div class="faq-container">
-        <details class="faq-item"><summary>Q1: 需要提供抵押品嗎？</summary><p style="padding:20px;">A: 多數方案無需抵押，依個人條件評估信用貸或債務整合規劃。</p></details>
-        <details class="faq-item"><summary>Q2: 聯徵次數會受影響嗎？</summary><p style="padding:20px;">A: 我們採顧問式諮詢，先進行內部評估，不隨意送件影響您的評分。</p></details>
-        <details class="faq-item"><summary>Q3: 是否有隱形成本？</summary><p style="padding:20px;">A: 堅持誠信服務，撥款前絕無任何開辦費、諮詢費。</p></details>
-        <details class="faq-item"><summary>Q4: 信用空白可以辦理嗎？</summary><p style="padding:20px;">A: 可以，會依現職條件與還款能力提供媒合建議。</p></details>
-        <details class="faq-item"><summary>Q5: 辦理時間需要多久？</summary><p style="padding:20px;">A: 評估僅需數小時，確認方案後最快 1-2 工作天撥款。</p></details>
-        <details class="faq-item"><summary>Q6: 可以隨時終止嗎？</summary><p style="padding:20px;">A: 提供彈性服務，在未對接環節前，您擁有完全的終止權。</p></details>
+        <details class="faq-item"><summary>Q: 申請需要提供抵押品嗎？</summary><p style="padding:20px;">A: 多數方案無需抵押，依個人條件評估信用貸或債務整合規劃。</p></details>
+        <details class="faq-item"><summary>Q: 聯徵次數會受到影響嗎？</summary><p style="padding:20px;">A: 我們採顧問式諮詢，不隨意送件影響您的評分。</p></details>
+        <details class="faq-item"><summary>Q: 是否有任何隱形成本？</summary><p style="padding:20px;">A: 堅持誠信，撥款前絕無任何開辦費、諮詢費。</p></details>
     </div>
 </section>
 
