@@ -1,0 +1,16 @@
+body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; }
+nav { background: #003366; color: white; padding: 15px 50px; display: flex; justify-content: space-between; }
+nav ul { list-style: none; display: flex; }
+nav ul li { margin-left: 20px; }
+nav ul li a { color: white; text-decoration: none; }
+
+.hero { padding: 100px 20px; text-align: center; background: #ffffff; }
+.marquee-container { background: #ffcc00; padding: 10px; overflow: hidden; text-align: center; font-weight: bold; }
+
+.line-float {
+    position: fixed; bottom: 30px; right: 30px;
+    width: 60px; height: 60px; background: #00c300;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.line-float img { width: 35px; }
