@@ -3,73 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全台雲端媒合資訊站 | 專業資金媒合顧問</title>
+    <title>全台雲端媒合資訊站</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        /* 全域樣式 */
-        body { font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; margin: 0; color: #333; background: #f8f9fa; }
+        body { font-family: 'Noto Serif TC', serif; margin: 0; color: #333; background: #f8f9fa; }
         .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
         
-        /* 跑馬燈樣式 */
-        .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 6px 0; overflow: hidden; white-space: nowrap; height: 28px; border-bottom: 2px solid #e67e22; }
-        #ticker { display: inline-block; padding-left: 100%; animation: ticker 50s linear infinite; font-size: 14px; font-weight: bold; }
+        /* 標題與 Banner */
+        .main-title { text-align: center; font-size: 36px; color: #1a2a3a; margin-top: 40px; letter-spacing: 2px; }
+        .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center; }
+
+        /* 跑馬燈：移至區塊上方 */
+        .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 10px 0; overflow: hidden; white-space: nowrap; height: 35px; margin-top: 40px; border-radius: 4px; }
+        #ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-size: 16px; font-weight: bold; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* Banner 區域 */
-        .hero { background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; color: white; padding: 80px 20px; text-align: center; }
-
-        /* 案例區塊 */
+        /* 案例區塊：亞洲專業面孔 */
         .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 30px; }
-        .case-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
-        .case-img { width: 100%; height: 180px; object-fit: cover; display: block; }
-        .case-content { padding: 20px; text-align: center; }
-        .case-content h3 { color: #2c3e50; margin: 0 0 10px 0; font-size: 17px; }
-        .case-content p { font-size: 13px; color: #555; line-height: 1.5; }
-
+        .case-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .case-img { width: 100%; height: 200px; object-fit: cover; }
+        .case-content { padding: 25px; text-align: center; }
+        .case-content h3 { font-size: 19px; color: #2c3e50; }
+        
         /* 懸浮按鈕 */
         .fixed-contact { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
-        .float-btn { display: block; width: 60px; height: 60px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-radius: 50%; overflow: hidden; background: white; transition: 0.3s; }
-        .float-btn:hover { transform: scale(1.1); }
-
-        @media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
+        .float-btn { display: block; width: 60px; height: 60px; margin-bottom: 10px; background: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
-<div class="ticker-wrap">
-    <div id="ticker"></div>
-</div>
-
-<header style="background: #fff; padding: 30px 0; text-align: center; border-bottom: 2px solid #2c3e50;">
-    <h1 style="color: #2c3e50; margin: 0; font-size: 28px;">全台雲端媒合資訊站</h1>
-</header>
+<header class="main-title">全台雲端媒合資訊站</header>
 
 <section class="hero">
-    <h2 style="font-size: 36px; margin-bottom: 20px;">安全‧快速‧專業的資金媒合</h2>
-    <p style="font-size: 18px; opacity: 0.9;">深耕台灣在地資源，為您提供最即時的資金媒合方案。</p>
+    <h2 style="font-size: 42px; margin-bottom: 20px;">安全‧快速‧專業的資金媒合</h2>
+    <p style="font-size: 20px;">深耕台灣在地資源，為您提供最即時的資金媒合方案。</p>
 </section>
 
 <div class="container">
-    <h2 style="text-align:center; color:#2c3e50; margin-bottom: 30px;">成功媒合案例</h2>
+    <div class="ticker-wrap"><div id="ticker"></div></div>
+    
+    <h2 style="text-align:center; color:#2c3e50; margin: 50px 0 30px 0; font-size: 32px;">成功媒合案例</h2>
     <div class="case-grid">
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="設備升級" class="case-img">
+            <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80" alt="亞洲商務" class="case-img">
             <div class="case-content">
-                <h3>【台中】製造業設備升級</h3>
-                <p>針對在地工廠轉型需求，媒合最適金融資源，協助生產線順利擴產。</p>
+                <h3>【台中】精密製造業設備資金</h3>
+                <p>協助在地企業進行自動化轉型，順利取得擴產資金。</p>
             </div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80" alt="急難週轉" class="case-img">
+            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="亞洲諮詢" class="case-img">
             <div class="case-content">
-                <h3>【台北】個人急難週轉</h3>
-                <p>由專業顧問一對一評估，快速媒合在地合規資金，解決緊急資金缺口。</p>
+                <h3>【台北】金融科技諮詢媒合</h3>
+                <p>專業顧問一對一服務，確保您的資金周轉合規且透明。</p>
             </div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=600&q=80" alt="創業營運" class="case-img">
+            <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80" alt="亞洲團隊" class="case-img">
             <div class="case-content">
-                <h3>【高雄】創業營運資金</h3>
-                <p>協助在地連鎖品牌進行資金整合，完善營運規劃，讓創業之路更穩健。</p>
+                <h3>【高雄】在地餐飲創業營運</h3>
+                <p>支持在地小微企業發展，從財務規劃到資金對接全程協助。</p>
             </div>
         </div>
     </div>
@@ -81,25 +74,17 @@
 </div>
 
 <script>
-    // 跑馬燈雜湊生成器
-    const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市", "新竹市"];
-    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡"];
+    const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市"];
+    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳"];
     const titles = ["先生", "小姐"];
-    const actions = ["成功媒合營運資金", "順利對接創業貸款", "圓滿解決資金周轉", "成功取得設備更新資金", "順利媒合個人週轉需求"];
+    const actions = ["成功媒合營運資金", "順利對接創業貸款", "圓滿解決資金周轉", "成功取得設備更新資金", "順利媒合個人週轉"];
 
-    function generateTicker() {
-        const ticker = document.getElementById('ticker');
-        let htmlContent = "";
-        for (let i = 0; i < 15; i++) {
-            const city = cities[Math.floor(Math.random() * cities.length)];
-            const surname = surnames[Math.floor(Math.random() * surnames.length)];
-            const title = titles[Math.floor(Math.random() * titles.length)];
-            const action = actions[Math.floor(Math.random() * actions.length)];
-            htmlContent += `📢 ${city} ${surname}${title} ${action} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
-        }
-        ticker.innerHTML = htmlContent;
+    const ticker = document.getElementById('ticker');
+    let html = "";
+    for(let i=0; i<15; i++) {
+        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titles[Math.floor(Math.random()*titles.length)]} ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
     }
-    generateTicker();
+    ticker.innerHTML = html;
 </script>
 
 </body>
