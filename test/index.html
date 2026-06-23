@@ -9,22 +9,24 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Serif TC', serif; color: #333; background: #f8f9fa; }
 
-        /* 導航與 Hero */
+        /* 導航列 */
         nav { background: #1a2a3a; color: white; padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 15px; }
+
+        /* Hero */
         .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; background-position: center; color: white; text-align: center; height: 60vh; display: flex; flex-direction: column; justify-content: center; }
 
-        /* 跑馬燈與數據 */
-        .ticker-wrap { background: #e67e22; color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); padding: 50px 10%; text-align: center; background: #fff; }
-        .stat-item h3 { font-size: 32px; color: #e67e22; }
+        /* 跑馬燈樣式 (已修復) */
+        .ticker-wrap { background: #e67e22; color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; height: 45px; }
+        #ticker { display: inline-block; padding-left: 100%; animation: ticker 80s linear infinite; font-size: 16px; font-weight: bold; }
+        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 內容區塊 */
+        /* 其他區域 */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); padding: 50px 10%; text-align: center; background: #fff; }
+        .stat-item h3 { font-size: 32px; color: #e67e22; margin-bottom: 5px; }
         section { padding: 80px 10%; }
         .bg-light { background: #f4f7f6; }
-        .faq-item { margin-bottom: 20px; padding: 20px; background: white; border-radius: 8px; border-left: 5px solid #e67e22; }
-
-        /* 固定諮詢按鈕 */
+        .faq-item { margin-bottom: 20px; padding: 20px; background: white; border-radius: 8px; border-left: 5px solid #e67e22; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .floating-line { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
         .line-btn { background: #06c755; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     </style>
@@ -53,10 +55,10 @@
 
 <section id="advantages" class="bg-light">
     <h2 style="text-align:center; margin-bottom: 50px;">為什麼選擇我們？</h2>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;">
-        <div class="adv-card"><h3>🛡️ 全台網絡</h3><p>深耕全台，無論在哪都能即時媒合。</p></div>
-        <div class="adv-card"><h3>⚡ 快速回應</h3><p>24 小時內完成初步評估，掌握先機。</p></div>
-        <div class="adv-card"><h3>⚖️ 安全合規</h3><p>嚴格保護個資，流程完全透明公開。</p></div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center;">
+        <div><h3>🛡️ 全台網絡</h3><p>深耕全台，無論在哪都能即時媒合。</p></div>
+        <div><h3>⚡ 快速回應</h3><p>24 小時內完成初步評估，掌握先機。</p></div>
+        <div><h3>⚖️ 安全合規</h3><p>嚴格保護個資，流程完全透明公開。</p></div>
     </div>
 </section>
 
@@ -71,10 +73,23 @@
 </div>
 
 <script>
-    document.getElementById('dynamic-title').innerText = "全台領先 資金媒合 頂級顧問";
-    const cities = ["台北", "高雄", "台中", "桃園", "台南"];
+    // 隨機標題
+    const mainTitles = ["全台領先 資金媒合 頂級顧問", "深耕台灣。卓越資源媒合服務", "資金媒合首選品牌。全台資源整合"];
+    document.getElementById('dynamic-title').innerText = mainTitles[Math.floor(Math.random() * mainTitles.length)];
+
+    // 全台雜湊跑馬燈 (修復後的邏輯)
+    const cities = ["台北", "新北", "桃園", "台中", "台南", "高雄", "新竹", "彰化", "雲林", "屏東", "宜蘭", "花蓮", "台東"];
+    const actions = ["成功媒合營運資金", "順利核貸週轉金", "解決周轉需求", "對接創業貸款", "完成抵押媒合", "取得設備更新資金"];
     const ticker = document.getElementById('ticker');
-    ticker.innerHTML = Array(30).fill(0).map(() => `📢 ${cities[Math.floor(Math.random()*cities.length)]} 案例成功媒合 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`).join("");
+    
+    let html = "";
+    for(let i=0; i<40; i++) {
+        let city = cities[Math.floor(Math.random() * cities.length)];
+        let action = actions[Math.floor(Math.random() * actions.length)];
+        let spacer = "&nbsp;".repeat(15);
+        html += `📢 ${city} ${action} ${spacer}`;
+    }
+    ticker.innerHTML = html;
 </script>
 
 </body>
