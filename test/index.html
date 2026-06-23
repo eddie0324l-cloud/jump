@@ -2,6 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>全台雲端媒合資訊站 | 資金媒合頂級顧問</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -68,31 +69,31 @@
 </section>
 
 <section id="cases" class="bg-light">
-    <div style="text-align: center; margin-bottom: 50px;">
+    <div style="text-align: center; margin-bottom: 60px;">
         <h2 style="font-size: 36px; color: #1a2a3a; margin-bottom: 15px;">成功媒合案例</h2>
         <div style="width: 60px; height: 3px; background: #e67e22; margin: 0 auto;"></div>
     </div>
 
     <div class="case-grid">
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="亞洲顧問" class="case-img">
-            <div class="case-content">
-                <h3 style="margin-bottom: 10px;">【台中】製造業擴產周轉</h3>
-                <p style="font-size: 14px; color: #666; line-height: 1.6;">客戶面臨訂單暴增但設備老舊，我們在 48 小時內媒合設備更新資金，協助產線順利升級。</p>
+            <img src="https://images.unsplash.com/photo-1590650153855-d9e808071d7b?w=800&q=80" alt="亞洲人士評估" class="case-img">
+            <div class="case-content" style="padding: 30px;">
+                <h3 style="margin-bottom: 15px; font-size: 19px; color: #1a2a3a;">【台中】製造業擴產周轉</h3>
+                <p style="font-size: 15px; color: #666; line-height: 1.8;">專業顧問審閱設備投資計畫，協助企業在 48 小時內完成資金對接，產線順利完成升級。</p>
             </div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&q=80" alt="亞洲商業對談" class="case-img">
-            <div class="case-content">
-                <h3 style="margin-bottom: 10px;">【台北】創業急難週轉</h3>
-                <p style="font-size: 14px; color: #666; line-height: 1.6;">針對突發資金缺口，我們媒合了合規的在地金融資源，讓該創業者於 3 天內解決營運危機。</p>
+            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=800&q=80" alt="亞洲商務洽談" class="case-img">
+            <div class="case-content" style="padding: 30px;">
+                <h3 style="margin-bottom: 15px; font-size: 19px; color: #1a2a3a;">【台北】創業急難週轉</h3>
+                <p style="font-size: 15px; color: #666; line-height: 1.8;">顧問與創業者一對一詳細溝通，精準媒合在地金融資源，讓創業者 3 天內穩度營運難關。</p>
             </div>
         </div>
         <div class="case-card">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="亞洲團隊" class="case-img">
-            <div class="case-content">
-                <h3 style="margin-bottom: 10px;">【高雄】微型企業營運扶植</h3>
-                <p style="font-size: 14px; color: #666; line-height: 1.6;">協助餐飲品牌規劃財務模型，成功對接低利資金，讓客戶穩定邁向第二間分店的擴張。</p>
+            <img src="https://images.unsplash.com/photo-1576267423047-18b0add34600?w=800&q=80" alt="亞洲目標共識" class="case-img">
+            <div class="case-content" style="padding: 30px;">
+                <h3 style="margin-bottom: 15px; font-size: 19px; color: #1a2a3a;">【高雄】微型企業營運扶植</h3>
+                <p style="font-size: 15px; color: #666; line-height: 1.8;">透過一對一財務模型規劃，成功對接低利資金，協助餐飲品牌穩健邁向第二間分店擴張。</p>
             </div>
         </div>
     </div>
@@ -103,9 +104,9 @@
     const mainTitles = ["全台領先 資金媒合 頂級顧問", "深耕台灣。卓越資源媒合服務", "資金媒合首選品牌。全台資源整合"];
     document.getElementById('dynamic-title').innerText = mainTitles[Math.floor(Math.random() * mainTitles.length)];
 
-    // 全台雜湊跑馬燈
-    const cities = ["台北", "新北", "桃園", "台中", "台南", "高雄", "新竹", "彰化", "雲林", "屏東", "宜蘭", "花蓮", "台東", "澎湖", "金門"];
-    const actions = ["成功媒合營運資金", "順利核貸週轉金", "解決周轉需求", "對接創業貸款", "完成抵押媒合", "取得設備更新資金"];
+    // 全台雜湊跑馬燈 (地區陣列)
+    const cities = ["台北", "新北", "基隆", "桃園", "新竹市", "新竹縣", "苗栗", "台中", "彰化", "南投", "雲林", "嘉義", "台南", "高雄", "屏東", "宜蘭", "花蓮", "台東", "澎湖", "金門", "馬祖"];
+    const actions = ["成功媒合營運資金", "順利核貸週轉金", "解決周轉需求", "對接創業貸款", "完成抵押媒合", "取得設備更新資金", "獲取週轉支援"];
     const ticker = document.getElementById('ticker');
     let html = "";
     for(let i=0; i<30; i++) {
