@@ -7,25 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Serif TC', serif; color: #333; background: #f8f9fa; }
+        body { font-family: 'Noto Serif TC', serif; color: #333; background: #f8f9fa; line-height: 1.6; }
         
         /* 導航與 Hero */
         nav { background: #1a2a3a; color: white; padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 15px; }
-        .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; background-position: center; color: white; text-align: center; height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+        .nav-links a { color: white; margin-left: 25px; text-decoration: none; font-size: 15px; }
+        .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
 
-        /* 極慢速跑馬燈 - 調整為 600s */
-        .ticker-wrap { background: #e67e22; color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; height: 45px; }
+        /* 極慢速跑馬燈 */
+        .ticker-wrap { background: #e67e22; color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; }
         #ticker { display: inline-block; padding-left: 100%; animation: ticker 600s linear infinite; font-size: 16px; font-weight: bold; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 按鈕優化 */
-        .floating-line { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
-        .line-btn { 
-            background: #06c755; color: white; padding: 16px 28px; border-radius: 50px; 
-            text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex; align-items: center; transition: transform 0.3s;
-        }
+        /* 內容區塊 */
+        .section-padding { padding: 80px 10%; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .card { padding: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .faq-item { margin-bottom: 25px; padding: 25px; background: white; border-radius: 8px; border-left: 5px solid #e67e22; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* 按鈕 */
+        .line-btn { position: fixed; bottom: 30px; right: 30px; background: #06c755; color: white; padding: 16px 28px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.3s; }
         .line-btn:hover { transform: scale(1.05); }
     </style>
 </head>
@@ -34,41 +35,59 @@
 <nav>
     <div style="font-size: 22px; font-weight: bold;">全台雲端媒合資訊站</div>
     <div class="nav-links">
-        <a href="#stats">數據實績</a> <a href="#advantages">核心優勢</a> <a href="#faq">常見問題</a>
+        <a href="#stats">數據實績</a> <a href="#adv">核心優勢</a> <a href="#faq">常見問題</a>
     </div>
 </nav>
 
 <section class="hero">
-    <h2 id="dynamic-title" style="font-size: 48px; margin-bottom: 20px;"></h2>
+    <h2 style="font-size: 48px; margin-bottom: 20px;">全台領先 資金媒合 頂級顧問</h2>
     <p style="font-size: 22px;">專業諮詢，信賴共贏，為您對接高品質金融資源。</p>
 </section>
 
 <div class="ticker-wrap"><div id="ticker"></div></div>
 
-<div class="floating-line">
-    <a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">
-        💬 點此諮詢，免費評估
-    </a>
-</div>
+<section id="stats" class="section-padding">
+    <div class="grid-3" style="text-align: center;">
+        <div class="card"><h3>1,200+</h3><p>累計協助企業</p></div>
+        <div class="card"><h3>5 億+</h3><p>媒合資金總額</p></div>
+        <div class="card"><h3>98%</h3><p>客戶滿意評價</p></div>
+    </div>
+</section>
+
+<section id="adv" class="section-padding" style="background: #eef2f3;">
+    <h2 style="text-align: center; margin-bottom: 50px;">為什麼選擇我們？</h2>
+    <div class="grid-3">
+        <div class="card"><h3>🛡️ 全台資源網絡</h3><p>深耕全台在地資源，確保對接最精準的金融對口，打破地域限制。</p></div>
+        <div class="card"><h3>⚡ 快速即時回應</h3><p>透過雲端化作業系統，最快 24 小時內完成初步評估，協助您搶佔市場先機。</p></div>
+        <div class="card"><h3>⚖️ 安全合規透明</h3><p>以專業顧問視角把關所有合約與資金流程，確保您的個資與權益獲得最嚴謹保護。</p></div>
+    </div>
+</section>
+
+<section id="faq" class="section-padding" style="background: #ffffff;">
+    <h2 style="text-align: center; margin-bottom: 40px;">專業諮詢：您可能想了解的事</h2>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="faq-item"><h4>Q1: 媒合過程中會收取前期諮詢費用嗎？</h4><p>A: 我們的服務理念是「媒合成功才收費」。在對接適合您的金融方案並成功撥款前，我們絕不收取任何開辦費、諮詢費或服務費。</p></div>
+        <div class="faq-item"><h4>Q2: 我的個人資料與企業機密安全嗎？</h4><p>A: 安全是我們的生命線。本站採用銀行級 SSL 數據加密，嚴格遵守《個人資料保護法》，未經您授權絕不外流。</p></div>
+        <div class="faq-item"><h4>Q3: 媒合成功的流程通常需要多久？</h4><p>A: 顧問將於 24 小時內完成初步評估，並在 3-5 個工作天內對接適合的資源方，效率與品質是我們的承諾。</p></div>
+        <div class="faq-item"><h4>Q4: 如果我目前有聯徵紀錄較差的情況，還可以申請嗎？</h4><p>A: 我們擁有廣泛的金融網絡，即便聯徵分數較低，只要具備經營事實或足夠擔保，我們都會竭力為您規劃最合適方案。</p></div>
+        <div class="faq-item"><h4>Q5: 為什麼我應該找你們，而不是直接找銀行？</h4><p>A: 銀行審核標準單一，我們能跨平台整合市場上的金融資源，依據您的條件進行「精準媒合」，大幅提高核貸過件率。</p></div>
+        <div class="faq-item"><h4>Q6: 若對媒合結果不滿意，可以隨時終止嗎？</h4><p>A: 當然可以。我們提供彈性的評估機制，您隨時擁有主動終止媒合服務的權利，完全尊重您的決策，絕不強迫綁定。</p></div>
+    </div>
+</section>
+
+<a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">💬 點此諮詢，免費評估</a>
 
 <script>
-    document.getElementById('dynamic-title').innerText = "全台領先 資金媒合 頂級顧問";
-
-    // 完整的資料庫與跑馬燈邏輯 (保持原樣)
-    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊", "許", "鄭", "謝", "洪", "郭", "邱", "曾", "廖", "賴", "徐", "周", "葉", "蘇", "莊", "呂", "江", "何", "蕭", "羅", "高", "潘", "朱", "簡", "鍾", "游", "彭", "詹", "胡", "施", "沈", "余", "盧", "梁", "趙", "顏", "柯", "翁", "魏", "方", "孫", "戴", "范", "歐", "宋", "鄧", "杜", "侯", "曹", "薛", "丁", "卓", "馬", "董", "唐", "藍", "蔣", "田", "溫", "石", "古", "紀", "姚", "連", "馮", "歐陽", "程", "湯", "康", "姜", "白", "鄒", "尤", "巫", "鐘", "龔", "嚴", "韓", "袁", "金", "童", "陸", "夏", "柳", "凃", "邵", "汪"];
+    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊", "許", "鄭", "謝", "洪", "郭", "邱", "曾", "廖", "賴", "徐", "周", "葉", "蘇", "莊", "呂", "江", "何", "蕭", "羅", "高", "潘", "朱", "簡", "鍾", "游", "彭", "詹", "胡", "施", "沈", "余", "盧", "梁", "趙", "顏", "柯", "翁", "魏", "方", "孫", "張", "戴", "范", "歐", "宋", "鄧", "杜", "侯", "曹", "薛", "丁", "卓", "馬", "董", "唐", "藍", "蔣", "田", "溫", "曾", "石", "古", "紀", "姚", "連", "馮", "歐陽", "程", "湯", "黃", "田", "康", "姜", "白", "鄒", "尤", "巫", "鐘", "龔", "嚴", "韓", "袁", "金", "童", "陸", "夏", "柳", "凃", "邵", "汪"];
     const titles = ["先生", "女士", "小姐", "老闆", "經理", "負責人", "董事", "廠長", "總監", "店長", "會計", "創辦人"];
     const cities = ["台北", "新北", "桃園", "台中", "台南", "高雄", "新竹", "彰化", "屏東", "宜蘭", "嘉義", "雲林", "基隆", "花蓮", "台東", "苗栗", "南投", "金門", "澎湖"];
-    const actions = ["成功核貸營運週轉金", "取得設備更新貸款", "解決短期資金缺口", "完成低利貸款對接", "順利調度周轉資金", "獲得創業啟動補助", "完成不動產抵押媒合", "成功對接合規金融資源", "順利解決稅務調度困難", "取得擴廠週轉金", "成功取得低利週轉方案", "解決臨時性營運週轉", "完成債務整合與重組", "順利取得創業營運金", "成功媒合銀行端資源", "取得貨款調度資金", "解決季節性營運虧空", "順利獲准核貸申請", "成功獲得企業轉型資金", "完成財務模型健診並獲批", "取得二胎房貸成功", "順利對接專屬週轉方案", "完成臨時資金過橋", "成功取得營運擴張支援", "解決支票週轉需求", "取得中小企業專案資金", "完成微型創業貸款對接", "順利取得週轉方案", "成功解決財務赤字", "取得長期營運基金"];
+    const actions = ["成功核貸營運週轉金", "取得設備更新貸款", "解決短期資金缺口", "完成低利貸款對接", "順利調度周轉資金", "獲得創業啟動補助", "完成不動產抵押媒合", "成功對接合規金融資源", "順利解決稅務調度困難", "取得擴廠週轉金", "成功取得低利週轉方案", "解決臨時性營運週轉", "完成債務整合與重組", "順利取得創業營運金", "成功媒合銀行端資源", "取得貨款調度資金", "解決季節性營運虧空", "順利獲准核貸申請", "成功獲得企業轉型資金", "完成財務模型健診並獲批", "取得二胎房貸成功", "順利對接專屬週轉方案", "完成臨時資金過橋", "成功取得營運擴張支援", "解決支票週轉需求", "取得中小企業專案資金", "完成微型創業貸款對接", "順利取得週轉方案", "成功解決財務赤字", "取得長期營運基金", "完成設備採購資金媒合", "成功取得創業扶持金", "取得營運周轉額度", "解決突發性資金需求", "成功媒合專業金融方案", "完成週轉金核定", "順利取得企業經營週轉", "完成專案貸款撥款", "成功對接低利週轉金", "解決週轉不足問題", "取得企業發展專款", "成功獲得核貸通知", "完成抵押貸款對接", "取得靈活營運資金", "解決短時間周轉難題", "順利獲得銀行授信", "成功優化企業現金流", "取得發展擴展資金", "完成資金整合與分配", "成功對接創新創業貸款", "解決訂單暴增資金需求", "順利取得廠房升級貸款", "完成經營週轉金撥款", "取得企業週轉額度", "成功媒合優質金融借貸", "完成貸款流程順利撥款", "取得短期過橋資金", "成功獲准營運週轉貸", "解決日常開銷資金調度", "完成企業融資媒合", "取得快速撥款支持", "順利完成創業貸款申請", "成功獲得資金運作空間", "取得市場拓點周轉金", "完成融資整合方案", "解決擴店資金缺口", "成功獲得低利率融資", "取得緊急營運週轉支持", "順利解決資金運作難題", "完成企業發展信貸對接", "取得流動資金支持", "成功媒合借貸服務", "完成專案資金運作規劃", "解決設備老舊資金需求", "順利核准營運周轉额度", "成功獲貸創業初期費用", "取得財務靈活度支援", "完成貸款媒合成功", "取得營運規模擴張貸款", "成功核定週轉金撥款", "解決薪資發放資金壓力", "完成創業扶持金對接", "取得企業成長動力金", "順利對接合規貸款", "成功解決營運資金困境", "完成銀行融資方案配置", "取得企業長期營運額度", "解決短期週轉資金匱乏", "順利核貸成功案例", "取得擴張經營之資金", "成功對接專屬金融貸款", "完成財務健診並順利核貸", "取得企業營運週轉額度", "解決資金運用困難", "成功獲批轉型資金方案", "取得靈活運用之資金", "完成企業資金鏈整合", "成功獲得週轉資金授信", "解決創業期資金不穩", "順利對接企業融資金", "完成設備投資貸款撥款", "取得經營策略資金", "成功取得靈活資金配置", "完成短期營運週轉規劃", "取得發展經營之融資", "解決庫存積壓資金缺口", "順利撥款營運週轉金", "成功獲貸企業額度", "取得產業升級資金支援", "完成經營週轉金配置", "解決營運短暫資金缺口", "順利對接銀行貸款服務", "成功獲得資金解決方案", "取得企業擴張基金", "完成短期借貸順利撥款", "取得靈活營運額度支援", "成功媒合資金並撥付", "順利解決企業資金調度", "完成貸款申請流程結束", "取得未來發展週轉金"];
 
     const ticker = document.getElementById('ticker');
     let html = "";
     for(let i=0; i<150; i++) {
-        let city = cities[Math.floor(Math.random() * cities.length)];
-        let surname = surnames[Math.floor(Math.random() * surnames.length)];
-        let title = titles[Math.floor(Math.random() * titles.length)];
-        let action = actions[Math.floor(Math.random() * actions.length)];
-        let space = "&nbsp;".repeat(Math.floor(Math.random() * 5) + 20);
-        html += `📢 ${city} ${surname}${title} ${action} ${space}`;
+        let text = `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titles[Math.floor(Math.random()*titles.length)]} ${actions[Math.floor(Math.random()*actions.length)]}`;
+        html += text + "&nbsp;".repeat(Math.floor(Math.random()*5)+20);
     }
     ticker.innerHTML = html;
 </script>
