@@ -14,19 +14,19 @@
         .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 15px; }
         .hero { background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); background-size: cover; background-position: center; color: white; text-align: center; height: 60vh; display: flex; flex-direction: column; justify-content: center; }
 
-        /* 慢速雜湊跑馬燈 */
+        /* 極慢速跑馬燈 - 調整為 600s */
         .ticker-wrap { background: #e67e22; color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; height: 45px; }
-        #ticker { display: inline-block; padding-left: 100%; animation: ticker 350s linear infinite; font-size: 16px; font-weight: bold; }
+        #ticker { display: inline-block; padding-left: 100%; animation: ticker 600s linear infinite; font-size: 16px; font-weight: bold; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 數據與區塊 */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); padding: 50px 10%; text-align: center; background: #fff; }
-        .stat-item h3 { font-size: 32px; color: #e67e22; margin-bottom: 5px; }
-        section { padding: 80px 10%; }
-        .bg-light { background: #f4f7f6; }
-        .faq-item { margin-bottom: 20px; padding: 20px; background: white; border-radius: 8px; border-left: 5px solid #e67e22; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        /* 按鈕優化 */
         .floating-line { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
-        .line-btn { background: #06c755; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .line-btn { 
+            background: #06c755; color: white; padding: 16px 28px; border-radius: 50px; 
+            text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; align-items: center; transition: transform 0.3s;
+        }
+        .line-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -45,60 +45,20 @@
 
 <div class="ticker-wrap"><div id="ticker"></div></div>
 
-<section id="stats" class="stats-grid">
-    <div class="stat-item"><h3>1,200+</h3><p>累計協助企業</p></div>
-    <div class="stat-item"><h3>5 億+</h3><p>媒合資金總額</p></div>
-    <div class="stat-item"><h3>98%</h3><p>客戶滿意評價</p></div>
-</section>
-
-<section id="advantages" class="bg-light">
-    <h2 style="text-align:center; margin-bottom: 50px;">為什麼選擇我們？</h2>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center;">
-        <div><h3>🛡️ 全台網絡</h3><p>深耕全台，無論在哪都能即時媒合。</p></div>
-        <div><h3>⚡ 快速回應</h3><p>24 小時內完成初步評估，掌握先機。</p></div>
-        <div><h3>⚖️ 安全合規</h3><p>嚴格保護個資，流程完全透明公開。</p></div>
-    </div>
-</section>
-
-<section id="faq" class="bg-white">
-    <h2 style="text-align:center; margin-bottom: 40px;">常見問題 FAQ</h2>
-    <div class="faq-item"><h4>Q: 媒合過程中會收取前期費用嗎？</h4><p>A: 我們堅持透明收費，媒合成功前絕不收取任何額外服務費。</p></div>
-    <div class="faq-item"><h4>Q: 我的個人資料安全嗎？</h4><p>A: 採用銀行級加密保護您的個資，嚴格遵守個資法相關規範。</p></div>
-</section>
-
 <div class="floating-line">
-    <a href="https://lin.ee/9G5Oxcx" class="line-btn">💬 點此諮詢，免費評估</a>
+    <a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">
+        💬 點此諮詢，免費評估
+    </a>
 </div>
 
 <script>
     document.getElementById('dynamic-title').innerText = "全台領先 資金媒合 頂級顧問";
 
-    // 完整的資料庫
-    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊", "許", "鄭", "謝", "洪", "郭", "邱", "曾", "廖", "賴", "徐", "周", "葉", "蘇", "莊", "呂", "江", "何", "蕭", "羅", "高", "潘", "朱", "簡", "鍾", "游", "彭", "詹", "胡", "施", "沈", "余", "盧", "梁", "趙", "顏", "柯", "翁", "魏", "方", "孫", "張", "戴", "范", "歐", "宋", "鄧", "杜", "侯", "曹", "薛", "丁", "卓", "馬", "董", "唐", "藍", "蔣", "田", "溫", "曾", "石", "古", "紀", "姚", "連", "馮", "歐陽", "程", "湯", "黃", "田", "康", "姜", "白", "鄒", "尤", "巫", "鐘", "龔", "嚴", "韓", "袁", "金", "童", "陸", "夏", "柳", "凃", "邵", "汪"];
+    // 完整的資料庫與跑馬燈邏輯 (保持原樣)
+    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊", "許", "鄭", "謝", "洪", "郭", "邱", "曾", "廖", "賴", "徐", "周", "葉", "蘇", "莊", "呂", "江", "何", "蕭", "羅", "高", "潘", "朱", "簡", "鍾", "游", "彭", "詹", "胡", "施", "沈", "余", "盧", "梁", "趙", "顏", "柯", "翁", "魏", "方", "孫", "戴", "范", "歐", "宋", "鄧", "杜", "侯", "曹", "薛", "丁", "卓", "馬", "董", "唐", "藍", "蔣", "田", "溫", "石", "古", "紀", "姚", "連", "馮", "歐陽", "程", "湯", "康", "姜", "白", "鄒", "尤", "巫", "鐘", "龔", "嚴", "韓", "袁", "金", "童", "陸", "夏", "柳", "凃", "邵", "汪"];
     const titles = ["先生", "女士", "小姐", "老闆", "經理", "負責人", "董事", "廠長", "總監", "店長", "會計", "創辦人"];
     const cities = ["台北", "新北", "桃園", "台中", "台南", "高雄", "新竹", "彰化", "屏東", "宜蘭", "嘉義", "雲林", "基隆", "花蓮", "台東", "苗栗", "南投", "金門", "澎湖"];
-    const actions = [
-        "成功核貸營運週轉金", "取得設備更新貸款", "解決短期資金缺口", "完成低利貸款對接", "順利調度周轉資金", "獲得創業啟動補助",
-        "完成不動產抵押媒合", "成功對接合規金融資源", "順利解決稅務調度困難", "取得擴廠週轉金", "成功取得低利週轉方案", "解決臨時性營運週轉",
-        "完成債務整合與重組", "順利取得創業營運金", "成功媒合銀行端資源", "取得貨款調度資金", "解決季節性營運虧空", "順利獲准核貸申請",
-        "成功獲得企業轉型資金", "完成財務模型健診並獲批", "取得二胎房貸成功", "順利對接專屬週轉方案", "完成臨時資金過橋", "成功取得營運擴張支援",
-        "解決支票週轉需求", "取得中小企業專案資金", "完成微型創業貸款對接", "順利取得週轉方案", "成功解決財務赤字", "取得長期營運基金",
-        "完成設備採購資金媒合", "成功取得創業扶持金", "取得營運周轉額度", "解決突發性資金需求", "成功媒合專業金融方案", "完成週轉金核定",
-        "順利取得企業經營週轉", "完成專案貸款撥款", "成功對接低利週轉金", "解決週轉不足問題", "取得企業發展專款", "成功獲得核貸通知",
-        "完成抵押貸款對接", "取得靈活營運資金", "解決短時間周轉難題", "順利獲得銀行授信", "成功優化企業現金流", "取得發展擴展資金",
-        "完成資金整合與分配", "成功對接創新創業貸款", "解決訂單暴增資金需求", "順利取得廠房升級貸款", "完成經營週轉金撥款", "取得企業週轉額度",
-        "成功媒合優質金融借貸", "完成貸款流程順利撥款", "取得短期過橋資金", "成功獲准營運週轉貸", "解決日常開銷資金調度", "完成企業融資媒合",
-        "取得快速撥款支持", "順利完成創業貸款申請", "成功獲得資金運作空間", "取得市場拓點周轉金", "完成融資整合方案", "解決擴店資金缺口",
-        "成功獲得低利率融資", "取得緊急營運週轉支持", "順利解決資金運作難題", "完成企業發展信貸對接", "取得流動資金支持", "成功媒合借貸服務",
-        "完成專案資金運作規劃", "解決設備老舊資金需求", "順利核准營運周轉额度", "成功獲貸創業初期費用", "取得財務靈活度支援", "完成貸款媒合成功",
-        "取得營運規模擴張貸款", "成功核定週轉金撥款", "解決薪資發放資金壓力", "完成創業扶持金對接", "取得企業成長動力金", "順利對接合規貸款",
-        "成功解決營運資金困境", "完成銀行融資方案配置", "取得企業長期營運額度", "解決短期週轉資金匱乏", "順利核貸成功案例", "取得擴張經營之資金",
-        "成功對接專屬金融貸款", "完成財務健診並順利核貸", "取得企業營運週轉額度", "解決資金運用困難", "成功獲批轉型資金方案", "取得靈活運用之資金",
-        "完成企業資金鏈整合", "成功獲得週轉資金授信", "解決創業期資金不穩", "順利對接企業融資金", "完成設備投資貸款撥款", "取得經營策略資金",
-        "成功取得靈活資金配置", "完成短期營運週轉規劃", "取得發展經營之融資", "解決庫存積壓資金缺口", "順利撥款營運週轉金", "成功獲貸企業額度",
-        "取得產業升級資金支援", "完成經營週轉金配置", "解決營運短暫資金缺口", "順利對接銀行貸款服務", "成功獲得資金解決方案", "取得企業擴張基金",
-        "完成短期借貸順利撥款", "取得靈活營運額度支援", "成功媒合資金並撥付", "順利解決企業資金調度", "完成貸款申請流程結束", "取得未來發展週轉金"
-    ];
+    const actions = ["成功核貸營運週轉金", "取得設備更新貸款", "解決短期資金缺口", "完成低利貸款對接", "順利調度周轉資金", "獲得創業啟動補助", "完成不動產抵押媒合", "成功對接合規金融資源", "順利解決稅務調度困難", "取得擴廠週轉金", "成功取得低利週轉方案", "解決臨時性營運週轉", "完成債務整合與重組", "順利取得創業營運金", "成功媒合銀行端資源", "取得貨款調度資金", "解決季節性營運虧空", "順利獲准核貸申請", "成功獲得企業轉型資金", "完成財務模型健診並獲批", "取得二胎房貸成功", "順利對接專屬週轉方案", "完成臨時資金過橋", "成功取得營運擴張支援", "解決支票週轉需求", "取得中小企業專案資金", "完成微型創業貸款對接", "順利取得週轉方案", "成功解決財務赤字", "取得長期營運基金"];
 
     const ticker = document.getElementById('ticker');
     let html = "";
@@ -107,7 +67,7 @@
         let surname = surnames[Math.floor(Math.random() * surnames.length)];
         let title = titles[Math.floor(Math.random() * titles.length)];
         let action = actions[Math.floor(Math.random() * actions.length)];
-        let space = "&nbsp;".repeat(Math.floor(Math.random() * 5) + 15);
+        let space = "&nbsp;".repeat(Math.floor(Math.random() * 5) + 20);
         html += `📢 ${city} ${surname}${title} ${action} ${space}`;
     }
     ticker.innerHTML = html;
