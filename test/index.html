@@ -1,104 +1,50 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專業財務規劃媒合 | 個人專屬服務站</title>
-    <style>
-        :root { --primary-blue: #004a99; --accent-orange: #f39c12; --text-dark: #2c3e50; --bg-light: #f9fbfd; }
-        body { font-family: 'PingFang TC', 'Helvetica Neue', sans-serif; color: var(--text-dark); margin: 0; line-height: 1.7; background: #ffffff; }
-        
-        nav { background: #fff; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .nav-links a { color: var(--primary-blue); margin-left: 15px; text-decoration: none; font-weight: 600; padding: 8px 18px; border: 1px solid var(--primary-blue); border-radius: 20px; transition: 0.3s; }
-        .nav-links a:hover { background: var(--primary-blue); color: #fff; }
-        
-        .hero { padding: 120px 8%; text-align: center; color: white; background-size: cover; background-position: center; }
-        .hero h1 { font-size: 40px; margin-bottom: 20px; }
-        
-        .ticker-wrap { background: var(--primary-blue); color: #fff; padding: 12px 0; overflow: hidden; white-space: nowrap; }
-        #ticker { display: inline-block; padding-left: 100%; animation: ticker 400s linear infinite; font-weight: 700; }
-        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-        
-        .section-padding { padding: 60px 8%; }
-        .process-container { display: flex; justify-content: space-between; padding: 40px 8%; background: var(--bg-light); border-radius: 12px; margin: 0 8%; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 40px 8%; }
-        .card-img { border-radius: 16px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease; background: white; }
-        .card-img:hover { transform: translateY(-10px); }
-        .card-img img { width: 100%; height: 220px; object-fit: cover; }
-        
-        .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-        .faq-item summary { padding: 20px; font-weight: bold; cursor: pointer; background: var(--bg-light); }
-        
-        .line-btn { position: fixed; bottom: 30px; right: 30px; background: var(--accent-orange); color: white; padding: 18px 30px; border-radius: 50px; font-weight: bold; z-index: 9999; box-shadow: 0 6px 15px rgba(243, 156, 18, 0.4); text-decoration: none; }
-        footer { background: #f8f9fa; padding: 40px 8%; text-align: center; color: #777; font-size: 13px; }
-    </style>
+    <title>全台雲端媒合資訊站</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-    <div style="font-size: 20px; font-weight: bold; color: var(--primary-blue);">財務規劃媒合站</div>
-    <div class="nav-links">
-        <a href="#process">流程</a><a href="#adv">服務特色</a><a href="#faq">常見問題</a>
+    <nav>
+        <div class="logo">全台雲端媒合資訊站</div>
+        <ul>
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="#">關於我們</a></li>
+            <li><a href="#">服務流程</a></li>
+            <li><a href="#">立即申請</a></li>
+        </ul>
+    </nav>
+
+    <div class="marquee-container">
+        <div class="marquee" id="marquee-display">最新成交資訊載入中...</div>
     </div>
-</nav>
 
-<section class="hero" style="background: linear-gradient(rgba(0, 74, 153, 0.8), rgba(0, 74, 153, 0.8)), url('https://images.unsplash.com/photo-1554224155-8d04cb27cd6c?w=1600&q=80');">
-    <h1>解決資金難關，重拾財務彈性</h1>
-    <p>專業顧問 1 對 1 諮詢，為您量身打造低負擔還款方案。</p>
-</section>
+    <header class="hero">
+        <h1>專業、安全、快速的資金媒合服務</h1>
+        <p>全台各地服務，包含離島，協助您解決資金需求。</p>
+    </header>
 
-<div class="ticker-wrap"><div id="ticker"></div></div>
+    <a href="https://lin.ee/SqO65x5" target="_blank" class="line-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="Line">
+    </a>
 
-<section id="process" class="section-padding">
-    <h2 style="text-align: center; margin-bottom: 40px;">簡單三步驟，資金快速對接</h2>
-    <div class="process-container">
-        <div class="process-step"><h4>1. 免費諮詢</h4><p>專業人員 1 對 1 溝通</p></div>
-        <div class="process-step"><h4>2. 客製評估</h4><p>規劃最佳還款計畫</p></div>
-        <div class="process-step"><h4>3. 快速撥款</h4><p>資金安全進入帳戶</p></div>
-    </div>
-</section>
+    <script>
+        // 隨機跑馬燈邏輯
+        const regions = ["台北市", "台中市", "高雄市", "台東縣", "澎湖縣", "金門縣"];
+        const surnames = ["陳", "林", "黃", "張", "王"];
+        const titles = ["先生", "小姐"];
+        const products = ["房屋貸款", "信用貸款", "企業週轉"];
+        const amounts = ["50萬", "120萬", "300萬"];
 
-<section id="adv" class="grid-3">
-    <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="個人規劃">
-        <div style="padding:20px;"><h3>💼 個人專屬規劃</h3><p>量身打造還款計畫，減輕您的每月負擔，重拾財務彈性。</p></div>
-    </div>
-    <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="專業諮詢">
-        <div style="padding:20px;"><h3>⚡ 零前期費用</h3><p>全程免費線上評估，撥款前絕不收取任何開辦或諮詢費。</p></div>
-    </div>
-    <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80" alt="隱私保護">
-        <div style="padding:20px;"><h3>🛡️ 隱私安心保障</h3><p>採用銀行級加密技術，全力保護您的個資安全與借貸隱私。</p></div>
-    </div>
-</section>
-
-<section id="faq" class="section-padding">
-    <h2 style="text-align: center; margin-bottom: 40px;">個人用戶常見疑問</h2>
-    <div class="faq-container">
-        <details class="faq-item"><summary>Q: 申請需要提供抵押品嗎？</summary><p style="padding:20px;">A: 多數方案無需抵押，依個人條件評估信用貸或債務整合規劃。</p></details>
-        <details class="faq-item"><summary>Q: 聯徵次數會受到影響嗎？</summary><p style="padding:20px;">A: 我們採顧問式諮詢，不隨意送件影響您的評分。</p></details>
-        <details class="faq-item"><summary>Q: 是否有任何隱形成本？</summary><p style="padding:20px;">A: 堅持誠信，撥款前絕無任何開辦費、諮詢費。</p></details>
-    </div>
-</section>
-
-<footer>
-    <p>地址：台北市信義區金融路 101 號 | 服務：週一至週五 09:00-18:00</p>
-    <p>© 2026 專業財務規劃媒合平台 All Rights Reserved.</p>
-</footer>
-
-<a href="https://line.me/ti/p/9G5Oxcx" class="line-btn" target="_blank">💬 點我免費諮詢</a>
-
-<script>
-    const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市", "基隆市", "新竹市", "嘉義市", "新竹縣", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "屏東縣", "宜蘭縣", "花蓮縣", "台東縣", "澎湖縣", "金門縣", "連江縣"];
-    const actions = ["成功申請信用貸款", "順利整合高利負債", "取得個人週轉金", "完成借貸對接", "獲得應急資金", "減輕還款壓力", "成功規劃財務方案"];
-    const ticker = document.getElementById('ticker');
-    let html = "";
-    for(let i=0; i<100; i++) {
-        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} 客戶 ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
-    }
-    ticker.innerHTML = html;
-</script>
+        function updateMarquee() {
+            const data = `${regions[Math.floor(Math.random()*regions.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titles[Math.floor(Math.random()*titles.length)]} 成功申辦 ${products[Math.floor(Math.random()*products.length)]}，獲准額度 ${amounts[Math.floor(Math.random()*amounts.length)]}`;
+            document.getElementById("marquee-display").innerText = "最新成交：" + data;
+        }
+        setInterval(updateMarquee, 3000);
+        updateMarquee();
+    </script>
 </body>
 </html>
