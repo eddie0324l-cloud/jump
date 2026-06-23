@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全台領先資金媒合服務</title>
+    <title>全台雲端媒合資訊站 | 資金媒合頂級顧問</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,7 +11,7 @@
         
         .hero { 
             background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); 
-            background-size: cover; background-position: center; color: white; padding: 120px 20px; text-align: center; 
+            background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center; 
         }
 
         .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 10px 0; overflow: hidden; white-space: nowrap; height: 40px; }
@@ -34,8 +34,8 @@
 <body>
 
 <section class="hero">
-    <h2 id="dynamic-title" style="font-size: 48px; margin-bottom: 20px; letter-spacing: 2px;"></h2>
-    <p style="font-size: 20px; opacity: 0.9;">專業諮詢，信賴共贏，為您對接高品質金融資源。</p>
+    <h2 id="dynamic-title" style="font-size: 44px; margin-bottom: 15px; letter-spacing: 2px;"></h2>
+    <p style="font-size: 20px; opacity: 0.9;">全台雲端媒合資訊站 | 專業諮詢，信賴共贏</p>
 </section>
 
 <div class="ticker-wrap"><div id="ticker"></div></div>
@@ -53,7 +53,7 @@
         </div>
         <div class="case-card">
             <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80" alt="在地創業" class="case-img">
-            <div class="case-content"><h3>在地創業營運支援</h3><p>陪伴小型創業品牌，從規劃到對接全程協助。</p></div>
+            <div class="case-content"><h3>在地創業營運支援</h3><p>整合優質資源，陪伴品牌度過關鍵營運期。</p></div>
         </div>
     </div>
 </div>
@@ -64,15 +64,15 @@
 </div>
 
 <script>
-    // 1. 隨機標題邏輯
-    const titles = [
+    // 隨機切換霸氣標語
+    const mainTitles = [
         "全台領先 資金媒合 頂級顧問",
         "深耕台灣。卓越資源媒合服務",
         "資金媒合首選品牌。全台資源整合"
     ];
-    document.getElementById('dynamic-title').innerText = titles[Math.floor(Math.random() * titles.length)];
+    document.getElementById('dynamic-title').innerText = mainTitles[Math.floor(Math.random() * mainTitles.length)];
 
-    // 2. 跑馬燈雜湊邏輯
+    // 跑馬燈雜湊
     const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市"];
     const surnames = ["陳", "林", "黃", "張", "李", "王", "吳"];
     const titlesTicker = ["先生", "小姐"];
