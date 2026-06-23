@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全台雲端媒合資訊站 | 資金媒合頂級顧問</title>
+    <title>全台雲端媒合資訊站</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,11 +11,11 @@
         
         .hero { 
             background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'); 
-            background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center; 
+            background-size: cover; background-position: center; color: white; padding: 120px 20px; text-align: center; 
         }
 
         .ticker-wrap { background: #1a2a3a; color: #ffbc00; padding: 10px 0; overflow: hidden; white-space: nowrap; height: 40px; }
-        #ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-size: 16px; font-weight: bold; }
+        #ticker { display: inline-block; padding-left: 100%; animation: ticker 80s linear infinite; font-size: 16px; font-weight: bold; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
         .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
@@ -45,15 +45,15 @@
     <div class="case-grid">
         <div class="case-card">
             <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80" alt="製造業" class="case-img">
-            <div class="case-content"><h3>精密製造業設備資金</h3><p>協助在地企業轉型，順利取得擴產資金。</p></div>
+            <div class="case-content"><h3>全台設備升級專案</h3><p>深耕在地，服務範圍涵蓋全台各大工業園區。</p></div>
         </div>
         <div class="case-card">
             <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="金融諮詢" class="case-img">
-            <div class="case-content"><h3>金融科技諮詢媒合</h3><p>專業顧問一對一服務，確保流程合規透明。</p></div>
+            <div class="case-content"><h3>全台金融科技諮詢</h3><p>透過雲端技術，為您提供無地域限制的金融支援。</p></div>
         </div>
         <div class="case-card">
             <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80" alt="在地創業" class="case-img">
-            <div class="case-content"><h3>在地創業營運支援</h3><p>整合優質資源，陪伴品牌度過關鍵營運期。</p></div>
+            <div class="case-content"><h3>在地創業扶植計畫</h3><p>從北到南，陪伴每一位在地創業者穩定營運。</p></div>
         </div>
     </div>
 </div>
@@ -72,16 +72,24 @@
     ];
     document.getElementById('dynamic-title').innerText = mainTitles[Math.floor(Math.random() * mainTitles.length)];
 
-    // 跑馬燈雜湊
-    const cities = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市"];
-    const surnames = ["陳", "林", "黃", "張", "李", "王", "吳"];
-    const titlesTicker = ["先生", "小姐"];
-    const actions = ["成功媒合營運資金", "順利對接創業貸款", "圓滿解決資金周轉", "取得設備更新資金", "順利媒合個人週轉"];
+    // 擴充全台地區資料庫
+    const cities = ["台北", "新北", "基隆", "桃園", "新竹市", "新竹縣", "苗栗", "台中", "彰化", "南投", "雲林", "嘉義", "台南", "高雄", "屏東", "宜蘭", "花蓮", "台東", "澎湖", "金門", "馬祖"];
+    const names = ["陳先生", "林小姐", "黃老闆", "張經理", "李小姐", "王先生", "吳總裁", "劉女士", "蔡先生", "楊小姐", "洪先生", "葉經理"];
+    const actions = [
+        "順利核貸", "成功媒合營運資金", "解決周轉需求", "對接創業啟動貸款", "完成不動產抵押媒合",
+        "取得設備更新資金", "獲取低利週轉支援", "完成企業擴產資金配置", "解決突發資金缺口", "達成創業營運規劃對接",
+        "順利取得營運週轉金", "獲得緊急資金奧援", "完成信貸媒合", "協助轉型資金對接", "達成財務整合建議",
+        "取得設備升級專款", "圓滿達成資金調度", "成功對接在地金融資源", "獲取長期營運週轉額度", "順利解決財務燃眉之急"
+    ];
 
     const ticker = document.getElementById('ticker');
     let html = "";
-    for(let i=0; i<15; i++) {
-        html += `📢 ${cities[Math.floor(Math.random()*cities.length)]} ${surnames[Math.floor(Math.random()*surnames.length)]}${titlesTicker[Math.floor(Math.random()*titlesTicker.length)]} ${actions[Math.floor(Math.random()*actions.length)]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+    for(let i = 0; i < 30; i++) {
+        const city = cities[Math.floor(Math.random() * cities.length)];
+        const name = names[Math.floor(Math.random() * names.length)];
+        const action = actions[Math.floor(Math.random() * actions.length)];
+        const spacer = "&nbsp;".repeat(Math.floor(Math.random() * 10) + 12);
+        html += `📢 ${city} ${name} ${action} ${spacer}`;
     }
     ticker.innerHTML = html;
 </script>
