@@ -1,119 +1,811 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全貸通 | 申辦中心</title>
-    <style>
-        :root { --primary-color: #004a99; --bg-color: #f8f9fa; }
-        
-        /* 強制 html 和 body 佔滿整個視窗高度 */
-        html, body { height: 100%; margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg-color); 
-            display: flex; 
-            flex-direction: column; 
-        }
-        
-        header { 
-            background: white; padding: 20px; 
-            border-bottom: 3px solid var(--primary-color); 
-            text-align: center; font-weight: bold; font-size: 18px; color: #333; 
-        }
-        
-        /* main 區塊強制置中 */
-        main { 
-            flex: 1; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            width: 100%;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="QUANDAITONG 全貸通媒合服務中心官方申辦導引頁，快速前往合作商家的官方 Line 申辦通道。" />
+  <title>QUANDAITONG 全貸通 | 官方申辦導引</title>
+  <style>
+    :root {
+      --ink: #14213d;
+      --ink-soft: #4c5872;
+      --line: rgba(20, 33, 61, 0.12);
+      --paper: #fffaf0;
+      --card: rgba(255, 255, 255, 0.86);
+      --gold: #c99a3a;
+      --gold-deep: #9f7220;
+      --blue: #164f9f;
+      --slate: #26364e;
+      --green: #1f8b58;
+      --shadow: 0 30px 90px rgba(20, 33, 61, 0.16);
+      --radius-xl: 34px;
+      --radius-md: 18px;
+    }
 
-        .container { 
-            text-align: center; 
-            max-width: 400px; 
-            width: 100%; 
-            background: white; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid #e9ecef;
-            box-sizing: border-box;
-        }
-        
-        h2 { color: #212529; margin-bottom: 15px; }
-        .hint-text { color: #6c757d; font-size: 15px; margin-bottom: 30px; line-height: 1.6; min-height: 3em; }
-        
-        /* 按鈕區塊修正：使用 flex 與 gap 確保對齊 */
-        #select-zone { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 12px; 
-            width: 100%;
-        }
-        
-        .site-btn { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            width: 100%; 
-            padding: 14px 0; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-weight: 600; 
-            transition: all 0.3s;
-            box-sizing: border-box; /* 關鍵：確保 padding 不會撐壞寬度 */
-        }
-        .site-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        
-        .btn-1 { background-color: #004a99; } /* 金融藍 */
-        .btn-2 { background-color: #343a40; } /* 科技灰 */
-        .btn-3 { background-color: #28a745; } /* 權威綠 */
-        
-        footer { padding: 20px; text-align: center; color: #adb5bd; font-size: 12px; }
-    </style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      color: var(--ink);
+      font-family: "Noto Serif TC", "Songti TC", "PingFang TC", "Microsoft JhengHei", serif;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201, 154, 58, 0.23), transparent 30%),
+        radial-gradient(circle at 86% 12%, rgba(22, 79, 159, 0.14), transparent 34%),
+        linear-gradient(135deg, #fff8e7 0%, #f7fbff 48%, #eef4f8 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.36;
+      background-image:
+        linear-gradient(rgba(20, 33, 61, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 33, 61, 0.045) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black 0%, transparent 76%);
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      isolation: isolate;
+    }
+
+    .orb {
+      position: fixed;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.65;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      width: 260px;
+      height: 260px;
+      left: -86px;
+      bottom: 10%;
+      background: linear-gradient(135deg, rgba(201, 154, 58, 0.34), rgba(255, 255, 255, 0));
+    }
+
+    .orb.two {
+      width: 320px;
+      height: 320px;
+      right: -120px;
+      top: 18%;
+      background: linear-gradient(135deg, rgba(22, 79, 159, 0.18), rgba(255, 255, 255, 0));
+      animation-delay: -5s;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(18px, -20px, 0) scale(1.05); }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 8px;
+    }
+
+    .header-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      box-shadow: 0 14px 32px rgba(20, 33, 61, 0.22);
+      display: block;
+    }
+
+    .brand-name {
+      white-space: nowrap;
+    }
+
+    .official-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(14px);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .official-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22a06b;
+      box-shadow: 0 0 0 5px rgba(34, 160, 107, 0.12);
+    }
+
+    .official-site-link,
+    .website-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid rgba(201, 154, 58, 0.34);
+      background: rgba(255, 255, 255, 0.66);
+      backdrop-filter: blur(14px);
+      transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .official-site-link {
+      padding: 9px 13px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .official-site-link:hover,
+    .official-site-link:focus-visible,
+    .website-link:hover,
+    .website-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(201, 154, 58, 0.68);
+      box-shadow: 0 14px 28px rgba(20, 33, 61, 0.12);
+      outline: none;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      align-items: center;
+      padding: 52px 0 44px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.72fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--gold-deep);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 26px 0 0;
+      color: var(--ink-soft);
+      font-size: clamp(17px, 2.2vw, 20px);
+      line-height: 1.9;
+    }
+
+    .panel {
+      position: relative;
+      padding: 1px;
+      border-radius: calc(var(--radius-xl) + 1px);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(201, 154, 58, 0.36), rgba(20, 33, 61, 0.18));
+      box-shadow: var(--shadow);
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      z-index: -1;
+      border: 1px solid rgba(20, 33, 61, 0.08);
+      border-radius: 42px;
+      transform: rotate(-2.5deg);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(26px, 4vw, 40px);
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      backdrop-filter: blur(24px);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.78), transparent 38%),
+        radial-gradient(circle at 80% 8%, rgba(201, 154, 58, 0.18), transparent 32%);
+    }
+
+    .card > * { position: relative; z-index: 1; }
+
+    .card-title {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .hint-text {
+      min-height: 4.5em;
+      margin: 14px 0 24px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .action-prompt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      padding: 13px 15px;
+      border: 1px solid rgba(201, 154, 58, 0.34);
+      border-radius: 18px;
+      color: var(--ink);
+      background: linear-gradient(135deg, rgba(255, 248, 228, 0.92), rgba(255, 255, 255, 0.66));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .action-prompt::before {
+      content: "LINE";
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: white;
+      background: #06c755;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+    }
+
+    .website-link {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .website-link::after,
+    .official-site-link::after {
+      content: "›";
+      font-family: Georgia, serif;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    #select-zone {
+      display: grid;
+      gap: 13px;
+    }
+
+    .site-btn {
+      --accent: var(--blue);
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 66px;
+      padding: 14px 16px;
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent), white 10%), var(--accent)),
+        var(--accent);
+      box-shadow: 0 18px 34px color-mix(in srgb, var(--accent), transparent 74%);
+      isolation: isolate;
+      overflow: hidden;
+      transition: transform 0.26s ease, box-shadow 0.26s ease, filter 0.26s ease;
+    }
+
+    .site-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+      transform: translateX(-120%);
+      transition: opacity 0.2s ease, transform 0.65s ease;
+    }
+
+    .site-btn:hover,
+    .site-btn:focus-visible {
+      transform: translateY(-3px);
+      filter: saturate(1.05);
+      box-shadow: 0 24px 44px color-mix(in srgb, var(--accent), transparent 66%);
+      outline: none;
+    }
+
+    .site-btn:hover::before,
+    .site-btn:focus-visible::before {
+      opacity: 1;
+      transform: translateX(120%);
+    }
+
+    .site-btn:active { transform: translateY(-1px) scale(0.99); }
+
+    .site-btn.recommended {
+      box-shadow:
+        0 0 0 3px rgba(201, 154, 58, 0.32),
+        0 26px 48px color-mix(in srgb, var(--accent), transparent 62%);
+    }
+
+    .recommend-badge {
+      position: absolute;
+      top: 9px;
+      right: 44px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #5e4210;
+      background: linear-gradient(135deg, #fff2b8, #e6bd59);
+      box-shadow: 0 8px 18px rgba(94, 66, 16, 0.2);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      transform: translateY(-2px);
+      animation: badgePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { transform: translateY(-2px) scale(1); }
+      50% { transform: translateY(-2px) scale(1.06); }
+    }
+
+    .btn-1 { --accent: var(--blue); }
+    .btn-2 { --accent: var(--slate); }
+    .btn-3 { --accent: var(--green); }
+
+    .btn-index {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.16);
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .btn-copy {
+      display: grid;
+      gap: 3px;
+    }
+
+    .btn-name {
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-desc {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .btn-arrow {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-family: Georgia, serif;
+      font-size: 19px;
+      transition: transform 0.26s ease;
+    }
+
+    .site-btn:hover .btn-arrow,
+    .site-btn:focus-visible .btn-arrow {
+      transform: translateX(3px);
+    }
+
+    .micro-note {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid rgba(20, 33, 61, 0.1);
+      border-radius: 16px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.5);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 14px 0 28px;
+      color: rgba(76, 88, 114, 0.74);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .footer-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    @media (max-width: 860px) {
+      header {
+        padding-top: 20px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .lead {
+        margin-top: 20px;
+      }
+
+      .panel::before {
+        inset: -10px;
+        transform: rotate(-1.2deg);
+      }
+    }
+
+    @media (max-width: 560px) {
+      body::before {
+        background-size: 34px 34px;
+        opacity: 0.24;
+      }
+
+      header {
+        width: min(100% - 24px, 1120px);
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 16px;
+      }
+
+      .brand {
+        gap: 10px;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+      }
+
+      .brand-name {
+        font-size: 15px;
+      }
+
+      .header-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 8px;
+      }
+
+      main,
+      footer {
+        width: min(100% - 24px, 1120px);
+      }
+
+      main {
+        padding: 26px 0 24px;
+      }
+
+      .official-badge,
+      .official-site-link {
+        width: 100%;
+        justify-content: center;
+        white-space: normal;
+      }
+
+      .hero {
+        gap: 24px;
+      }
+
+      .eyebrow {
+        margin-bottom: 12px;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+      }
+
+      .eyebrow::before {
+        width: 24px;
+      }
+
+      h1 {
+        font-size: clamp(32px, 12vw, 46px);
+        line-height: 1.06;
+        letter-spacing: -0.05em;
+      }
+
+      .lead {
+        margin-top: 16px;
+        font-size: 15.5px;
+        line-height: 1.75;
+      }
+
+      .panel {
+        border-radius: 27px;
+        box-shadow: 0 22px 52px rgba(20, 33, 61, 0.14);
+      }
+
+      .panel::before {
+        display: none;
+      }
+
+      .card {
+        padding: 22px 16px 18px;
+        border-radius: 26px;
+      }
+
+      .card-title {
+        font-size: 24px;
+      }
+
+      .hint-text {
+        min-height: auto;
+        margin: 12px 0 16px;
+        font-size: 14.5px;
+        line-height: 1.7;
+      }
+
+      .action-prompt {
+        align-items: flex-start;
+        margin-bottom: 13px;
+        padding: 12px;
+        border-radius: 16px;
+        font-size: 14.5px;
+      }
+
+      #select-zone {
+        gap: 11px;
+      }
+
+      .site-btn {
+        grid-template-columns: auto 1fr;
+        min-height: 70px;
+        gap: 11px;
+        padding: 13px;
+      }
+
+      .site-btn.recommended {
+        padding-top: 30px;
+      }
+
+      .recommend-badge {
+        top: 7px;
+        right: 12px;
+        font-size: 11px;
+      }
+
+      .btn-arrow {
+        display: none;
+      }
+
+      .btn-index {
+        width: 35px;
+        height: 35px;
+        border-radius: 12px;
+        font-size: 16px;
+      }
+
+      .btn-name {
+        font-size: 16px;
+      }
+
+      .btn-desc {
+        font-size: 11px;
+        letter-spacing: 0.05em;
+      }
+
+      .website-link {
+        min-height: 46px;
+        margin-top: 12px;
+      }
+
+      .micro-note {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 14px;
+        font-size: 12.5px;
+      }
+
+      .footer-line {
+        flex-direction: column;
+        gap: 6px;
+        padding-top: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
+    <div class="orb one" aria-hidden="true"></div>
+    <div class="orb two" aria-hidden="true"></div>
 
-    <header>全貸通媒合服務中心</header>
+    <header>
+      <div class="brand" aria-label="QUANDAITONG 全貸通媒合服務中心">
+        <img class="brand-logo" src="logo.svg" alt="QUANDAITONG 全貸通 Logo" />
+        <span class="brand-name">QUANDAITONG 全貸通</span>
+      </div>
+      <div class="header-actions">
+        <div class="official-badge">官方授權申辦導引頁</div>
+        <a class="official-site-link" href="https://eddie0324l-cloud.github.io/QUANDAITONG/" target="_blank" rel="noopener">官方網站</a>
+      </div>
+    </header>
 
     <main>
-        <div class="container">
-            <div style="font-size: 40px; margin-bottom: 10px;">🏢</div>
-            <h2>服務申辦導引</h2>
-            <p id="hint-text" class="hint-text"></p>
-            
-            <div id="select-zone">
-                <a href="https://lin.ee/SQJxNtp" class="site-btn btn-1">急速金 官方Line</a>
-                <a href="https://lin.ee/pjknVQF" class="site-btn btn-2">鈔安心 官方Line</a>
-                <a href="https://lin.ee/zRInWfe" class="site-btn btn-3">貸好運 官方Line</a>
-            </div>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">QUANDAITONG Gateway</p>
+          <h1 id="page-title">選擇合作商家，前往官方申辦通道</h1>
+          <p class="lead">
+            由全貸通媒合服務中心提供導引，點選任一合作商家後，將直接開啟對應的官方 Line 申辦流程。
+          </p>
         </div>
+
+        <div class="panel">
+          <section class="card" aria-label="商家選擇">
+            <h2 class="card-title">服務申辦導引</h2>
+            <p id="hint-text" class="hint-text"></p>
+
+            <p class="action-prompt">請點選下方任一官方 Line 按鈕，立即開始線上申辦</p>
+
+            <div id="select-zone">
+              <a href="https://lin.ee/SQJxNtp" class="site-btn btn-1" aria-label="前往急速金官方 Line">
+                <span class="btn-index">01</span>
+                <span class="btn-copy">
+                  <span class="btn-name">急速金 官方 Line</span>
+                  <span class="btn-desc">點擊前往申辦流程</span>
+                </span>
+                <span class="btn-arrow" aria-hidden="true">›</span>
+              </a>
+
+              <a href="https://lin.ee/pjknVQF" class="site-btn btn-2" aria-label="前往鈔安心官方 Line">
+                <span class="btn-index">02</span>
+                <span class="btn-copy">
+                  <span class="btn-name">鈔安心 官方 Line</span>
+                  <span class="btn-desc">點擊前往申辦流程</span>
+                </span>
+                <span class="btn-arrow" aria-hidden="true">›</span>
+              </a>
+
+              <a href="https://lin.ee/zRInWfe" class="site-btn btn-3" aria-label="前往貸好運官方 Line">
+                <span class="btn-index">03</span>
+                <span class="btn-copy">
+                  <span class="btn-name">貸好運 官方 Line</span>
+                  <span class="btn-desc">點擊前往申辦流程</span>
+                </span>
+                <span class="btn-arrow" aria-hidden="true">›</span>
+              </a>
+            </div>
+
+            <a class="website-link" href="https://eddie0324l-cloud.github.io/QUANDAITONG/" target="_blank" rel="noopener">查看 QUANDAITONG 官方網站</a>
+
+            <p class="micro-note">
+              提醒：請確認您即將開啟的是官方 Line 頁面；後續資料填寫與服務說明皆以各商家官方通道為準。
+            </p>
+          </section>
+        </div>
+      </section>
     </main>
 
-    <footer>© 2026 全貸通媒合官方服務中心。此頁面為受權正式申辦管道。</footer>
+    <footer>
+      <div class="footer-line">
+        <span>© 2026 全貸通媒合官方服務中心</span>
+        <span>此頁面為授權正式申辦導引管道</span>
+      </div>
+    </footer>
+  </div>
 
-    <script type="text/javascript">
-        // 隨機提示詞
-        var hints = [
-            "請點擊任一個您喜歡的商家，系統將立即引導您前往申辦流程。",
-            "建議您挑選喜愛的商家，點擊後即可快速前往線上申辦服務。",
-            "請選擇任一商家點擊進入，我們將為您開啟專屬的官方申請通道。"
-        ];
-        document.getElementById("hint-text").innerText = hints[Math.floor(Math.random() * hints.length)];
+  <noscript>
+    <style>.hint-text::before { content: "請選擇任一商家點擊進入，我們將為您開啟對應的官方申請通道。"; }</style>
+  </noscript>
 
-        // 隨機按鈕排序
-        var parent = document.getElementById("select-zone");
-        var buttons = Array.from(parent.children);
-        buttons.sort(() => 0.5 - Math.random());
-        buttons.forEach(btn => parent.appendChild(btn));
-    </script>
+  <script>
+    const hints = [
+      "點選下方官方 Line 按鈕，即可進入商家服務人員協助的申辦流程。",
+      "請從下方選擇一個官方 Line 通道，立即開啟線上申辦服務。",
+      "若您已準備申辦，請直接點擊下方按鈕，系統會帶您前往官方 Line。"
+    ];
+
+    const hintText = document.getElementById("hint-text");
+    hintText.textContent = hints[Math.floor(Math.random() * hints.length)];
+
+    const parent = document.getElementById("select-zone");
+    const buttons = Array.from(parent.children);
+    buttons
+      .sort(() => Math.random() - 0.5)
+      .forEach((button, index) => {
+        button.querySelector(".btn-index").textContent = String(index + 1).padStart(2, "0");
+        parent.appendChild(button);
+      });
+
+    const recommendedButton = buttons[Math.floor(Math.random() * buttons.length)];
+    recommendedButton.classList.add("recommended");
+    const badge = document.createElement("span");
+    badge.className = "recommend-badge";
+    badge.textContent = "本次推薦";
+    recommendedButton.appendChild(badge);
+  </script>
 </body>
 </html>
