@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>正在跳轉至 LINE...</title>
     
-    <!-- Meta 自動跳轉 (作為備用機制) -->
-    <meta http-equiv="refresh" content="1;url=https://lin.ee/6Wdurbw">
-    
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -20,7 +17,8 @@
             background-color: #f4f5f6;
             text-align: center;
         }
-        .container {
+        /* 一般狀態的容器 */
+        #normal-content {
             padding: 30px 20px;
             background: white;
             border-radius: 16px;
@@ -30,22 +28,12 @@
         }
         .icon {
             font-size: 56px;
-            color: #06C755; /* LINE 的官方綠色 */
+            color: #06C755;
             margin-bottom: 15px;
             line-height: 1;
         }
-        h1 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        p {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
+        h1 { font-size: 20px; color: #333; margin-bottom: 12px; }
+        p { font-size: 15px; color: #666; margin-bottom: 24px; line-height: 1.5; }
         .btn {
             display: inline-block;
             background-color: #06C755;
@@ -59,29 +47,94 @@
             box-sizing: border-box;
             transition: background-color 0.2s;
         }
-        .btn:active {
-            background-color: #05b34c;
-            transform: scale(0.98);
+        .btn:active { background-color: #05b34c; transform: scale(0.98); }
+
+        /* iOS 專用的強制引導遮罩 (預設隱藏) */
+        #ios-guide {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            z-index: 9999;
+            text-align: center;
+            padding-top: 80px;
+            box-sizing: border-box;
+        }
+        .guide-arrow {
+            font-size: 60px;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            animation: bounce 0.8s infinite alternate;
+        }
+        .guide-text {
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 1.8;
+            margin-top: 20px;
+        }
+        .highlight { color: #06C755; }
+        
+        @keyframes bounce {
+            from { transform: translate(0, 0); }
+            to { transform: translate(10px, -10px); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 綠色對話框圖示 -->
+
+    <!-- 一般狀態：正常跳轉或非 FB 瀏覽器時顯示 -->
+    <div id="normal-content">
         <div class="icon">💬</div>
         <h1>正在為您開啟 LINE</h1>
         <p>如果系統沒有自動跳轉<br>請點擊下方按鈕前往。</p>
-        
-        <!-- 手動點擊跳轉按鈕 -->
-        <a href="https://lin.ee/6Wdurbw" class="btn">開啟 LINE</a>
+        <a href="https://lin.ee/6Wdurbw" class="btn">手動開啟 LINE</a>
+    </div>
+
+    <!-- iOS FB 瀏覽器狀態：顯示教學遮罩 -->
+    <div id="ios-guide">
+        <div class="guide-arrow">↗</div>
+        <div class="guide-text">
+            請點擊右上角的 <span class="highlight">「...」</span><br>
+            或右下角的 <span class="highlight">「指南針圖示」</span><br><br>
+            並選擇<br>
+            <span class="highlight">「在瀏覽器中開啟」</span><br>
+            才能順利加入 LINE 喔！
+        </div>
     </div>
 
     <script>
-        // JavaScript 自動跳轉機制
-        // 設定 800 毫秒的延遲，讓畫面先載入完成，避免 FB 瀏覽器阻擋過快的腳本跳轉
-        setTimeout(function() {
-            window.location.href = "https://lin.ee/6Wdurbw";
-        }, 800);
+        // 設定你要跳轉的 LINE 連結
+        var lineUrl = "https://lin.ee/6Wdurbw";
+        
+        // 取得使用者的裝置與瀏覽器資訊
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Messenger") > -1);
+        var isAndroid = /android/i.test(ua);
+        var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+        // 核心跳轉邏輯
+        if (isFB) {
+            if (isAndroid) {
+                // 如果是 Android + FB 內建瀏覽器，強制喚醒 Chrome 並帶入 LINE 連結
+                var intentUrl = "intent://lin.ee/6Wdurbw#Intent;scheme=https;package=com.android.chrome;end;";
+                window.location.href = intentUrl;
+            } else if (isIOS) {
+                // 如果是 iOS + FB 內建瀏覽器，顯示遮罩引導手動開啟 Safari
+                document.getElementById('normal-content').style.display = 'none';
+                document.getElementById('ios-guide').style.display = 'block';
+            } else {
+                // 其他 FB 環境防呆
+                window.location.href = lineUrl;
+            }
+        } else {
+            // 如果不是在 FB 瀏覽器裡面（一般瀏覽器如 Chrome, Safari），直接跳轉到 LINE
+            setTimeout(function() {
+                window.location.href = lineUrl;
+            }, 500);
+        }
     </script>
+
 </body>
 </html>
